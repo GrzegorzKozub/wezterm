@@ -11,7 +11,9 @@ cfg.window_background_opacity = 0.95
 cfg.win32_system_backdrop = 'Acrylic'
 
 cfg.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
-cfg.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
+
+cfg.window_padding = { left = 8, right = 8, top = 8, bottom = 0 }
+cfg.window_frame = { border_bottom_height = 6, border_bottom_color = 'rgba(50, 48, 47, 0)' }
 
 cfg.initial_cols = 120
 cfg.initial_rows = 30
@@ -20,7 +22,15 @@ cfg.window_close_confirmation = 'NeverPrompt'
 
 -- tabs
 
-cfg.hide_tab_bar_if_only_one_tab = false
+cfg.tab_bar_at_bottom = true
+cfg.use_fancy_tab_bar = false
+
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local title = string.format(' %s', tab.tab_index) -- so the window border instead of padding
+  return {
+    { Text = title },
+  }
+end)
 
 -- panes
 
