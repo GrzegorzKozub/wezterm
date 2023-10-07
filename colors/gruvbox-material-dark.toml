@@ -1,0 +1,78 @@
+[metadata]
+name = 'Gruvbox Material Dark'
+
+[colors]
+background = '#32302f'
+foreground = '#d4be98'
+cursor_bg = '#928374'
+cursor_fg = '#32302f'
+cursor_border = '#928374'
+compose_cursor = '#b47109'
+selection_fg = '#32302f'
+selection_bg = '#d4be98'
+split = '#504945'
+ansi = [
+  '#3c3836',
+  '#c14a4a',
+  '#6c782e',
+  '#b47109',
+  '#45707a',
+  '#945e80',
+  '#4c7a5d',
+  '#928374',
+]
+brights = [
+  '#665c54',
+  '#ea6962',
+  '#a9b665',
+  '#d8a657',
+  '#7daea3',
+  '#d3869b',
+  '#89b482',
+  '#d4be98',
+]
+
+
+[colors.tab_bar]
+background = '#282a36'
+
+[colors.tab_bar.active_tab]
+bg_color = '#bd93f9'
+fg_color = '#282a36'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab]
+bg_color = '#282a36'
+fg_color = '#f8f8f2'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = '#6272a4'
+fg_color = '#f8f8f2'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab]
+bg_color = '#282a36'
+fg_color = '#f8f8f2'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab_hover]
+bg_color = '#ff79c6'
+fg_color = '#f8f8f2'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'
+
