@@ -124,9 +124,6 @@ config.default_prog = { 'pwsh.exe', '-NoLogo' }
 config.audible_bell = 'Disabled'
 
 config.default_cursor_style = 'SteadyBar'
-config.cursor_blink_rate = 500
-config.cursor_blink_ease_in = 'Constant'
-config.cursor_blink_ease_out = 'Constant'
 
 config.scrollback_lines = 10000
 
@@ -137,7 +134,7 @@ wezterm.on('gui-startup', function(cmd)
   local screen = wezterm.gui.screens().active
   local dim = window:gui_window():get_dimensions()
   local left = (screen.width - dim.pixel_width) / 2
-  local top = (screen.height - dim.pixel_height) / 2
+  local top = (screen.height - dim.pixel_height) / 2 - 42 -- 4k taskbar
   window:gui_window():set_position(left, top)
 end)
 
