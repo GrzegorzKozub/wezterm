@@ -94,10 +94,10 @@ config.char_select_bg_color = colors.cursor_fg
 config.char_select_fg_color = colors.foreground
 
 config.colors = {
-  copy_mode_active_highlight_bg = { Color = '#00ff00' },
-  copy_mode_active_highlight_fg = { AnsiColor = 'Red' },
-  copy_mode_inactive_highlight_bg = { Color = '#52ad70' },
-  copy_mode_inactive_highlight_fg = { AnsiColor = 'Blue' },
+  copy_mode_active_highlight_bg = { Color = colors.ansi[4] },
+  copy_mode_active_highlight_fg = { Color = colors.background },
+  copy_mode_inactive_highlight_bg = { Color = colors.brights[4] },
+  copy_mode_inactive_highlight_fg = { Color = colors.background },
 
   quick_select_label_bg = { Color = colors.ansi[4] },
   quick_select_label_fg = { Color = colors.background },
@@ -107,9 +107,85 @@ config.colors = {
 
 -- keys
 
+  local copy_mode = wezterm.gui.default_key_tables().copy_mode
+  table.insert(
+    copy_mode,
+    
+{
+
+
+        key = 'q',
+        mods = 'CTRL',
+        action = wezterm.action.CopyMode { SetSelectionMode = 'Block' },
+      }
+
+  )
+
 config.leader = { key = 'x', mods = 'CTRL', timeout_milliseconds = 5000 }
 
 config.keys = {
+
+
+  {
+    key = 'f',
+    mods = 'SHIFT|CTRL',
+    action = wezterm.action.Search { CaseInSensitiveString = '' },
+  },
+
+ {
+    key = '{',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ActivateCopyMode,
+  },
+
+ {
+    key = '[',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateCopyMode,
+  },
+
+
+
+
+  {
+    key = 'PageUp',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollByPage(-1),
+  },
+
+
+
+
+
+  {
+    key = 'PageDown',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollByPage(1),
+  },
+
+  {
+    key = 'UpArrow',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollByLine(-1),
+  },
+
+  {
+    key = 'DownArrow',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollByLine(1),
+  },
+
+  {
+    key = 'Home',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollToTop,
+  },
+
+  {
+    key = 'End',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ScrollToBottom,
+  },
 
   {
     key = 'F1',
@@ -251,6 +327,7 @@ config.keys = {
 }
 
 config.key_tables = {
+  copy_mode = copy_mode,
   activate_pane = {
     {
       key = 'UpArrow',
@@ -289,6 +366,8 @@ config.key_tables = {
   },
 }
 
+
+
 -- shell
 
 config.default_prog = { 'pwsh.exe', '-NoLogo' }
@@ -313,8 +392,9 @@ wezterm.on('gui-startup', function(cmd)
 end)
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local title = string.gsub(tab.active_pane.title, 'Copy mode: ', '')
   return {
-    { Text = string.format('%s:%s', tab.tab_index, tab.active_pane.title) },
+    { Text = string.format('%s:%s', tab.tab_index, title) },
     { Text = ' ' },
   }
 end)
