@@ -93,7 +93,17 @@ config.command_palette_fg_color = colors.foreground
 config.char_select_bg_color = colors.cursor_fg
 config.char_select_fg_color = colors.foreground
 
+config.colors = {
+  copy_mode_active_highlight_bg = { Color = '#00ff00' },
+  copy_mode_active_highlight_fg = { AnsiColor = 'Red' },
+  copy_mode_inactive_highlight_bg = { Color = '#52ad70' },
+  copy_mode_inactive_highlight_fg = { AnsiColor = 'Blue' },
 
+  quick_select_label_bg = { Color = colors.ansi[4] },
+  quick_select_label_fg = { Color = colors.background },
+  quick_select_match_bg = { Color = colors.brights[4] },
+  quick_select_match_fg = { Color = colors.background },
+}
 
 -- keys
 
