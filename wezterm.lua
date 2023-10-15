@@ -15,6 +15,7 @@ config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 
 config.window_padding = { left = 16, right = 16, top = 16, bottom = 0 }
 config.window_frame = {
+  font = wezterm.font 'Segoe UI',
   border_bottom_height = 12,
   border_bottom_color = 'rgba(50, 48, 47, 0)',
 }
@@ -78,6 +79,7 @@ config.font = wezterm.font {
 
 config.font_size = 13.0
 config.command_palette_font_size = 13.0
+config.char_select_font_size = 13.0
 
 -- colors
 
@@ -88,13 +90,18 @@ config.bold_brightens_ansi_colors = 'No'
 config.command_palette_bg_color = colors.cursor_fg
 config.command_palette_fg_color = colors.foreground
 
+config.char_select_bg_color = colors.cursor_fg
+config.char_select_fg_color = colors.foreground
+
+
+
 -- keys
 
 config.leader = { key = 'x', mods = 'CTRL', timeout_milliseconds = 5000 }
 
 config.keys = {
 
-{
+  {
     key = 'F1',
     action = wezterm.action.ActivateCommandPalette,
   },
@@ -109,9 +116,166 @@ config.keys = {
     action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
   {
+    key = 'h',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'v',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'z',
+    mods = 'LEADER|SHIFT',
+    action = wezterm.action.TogglePaneZoomState,
+  },
+
+  -- tmux
+  {
+    key = 'UpArrow',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection 'Up',
+  },
+  {
+    key = 'DownArrow',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection 'Down',
+  },
+  {
+    key = 'LeftArrow',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection 'Left',
+  },
+  {
+    key = 'RightArrow',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection 'Right',
+  },
+
+  --wt
+  {
+    key = 'UpArrow',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Up',
+  },
+  {
+    key = 'DownArrow',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Down',
+  },
+  {
+    key = 'LeftArrow',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Left',
+  },
+  {
+    key = 'RightArrow',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Right',
+  },
+
+  -- wt
+  {
+    key = 'LeftArrow',
+    mods = 'ALT|CTRL',
+    action = wezterm.action.AdjustPaneSize { 'Left', 12 },
+  },
+  {
+    key = 'DownArrow',
+    mods = 'ALT|CTRL',
+    action = wezterm.action.AdjustPaneSize { 'Down', 3 },
+  },
+  { key = 'UpArrow',    mods = 'ALT|CTRL',  action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
+  {
+    key = 'RightArrow',
+    mods = 'ALT|CTRL',
+    action = wezterm.action.AdjustPaneSize { 'Right', 12 },
+  },
+
+  --tmux
+  {
+    key = 'r',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateKeyTable {
+      name = 'resize_pane',
+      one_shot = false,
+      timeout_milliseconds = 1000,
+    },
+  },
+
+  {
+    key = 'a',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateKeyTable {
+      name = 'activate_pane',
+      one_shot = false,
+      timeout_milliseconds = 1000,
+    },
+  },
+
+  -- tmux
+  {
     key = 'z',
     mods = 'LEADER',
     action = wezterm.action.TogglePaneZoomState,
+  },
+  -- wt
+  {
+    key = 'z',
+    mods = 'ALT|SHIFT',
+    action = wezterm.action.TogglePaneZoomState,
+  },
+
+  {
+    key = 'F11',
+    action = wezterm.action.ToggleFullScreen,
+  },
+
+  {
+    key = 'LeftArrow',
+    mods = 'SHIFT|ALT',
+    action = wezterm.action.RotatePanes 'CounterClockwise',
+  },
+  { key = 'RightArrow', mods = 'SHIFT|ALT', action = wezterm.action.RotatePanes 'Clockwise' },
+}
+
+config.key_tables = {
+  activate_pane = {
+    {
+      key = 'UpArrow',
+      action = wezterm.action.ActivatePaneDirection 'Up',
+    },
+    {
+      key = 'DownArrow',
+      action = wezterm.action.ActivatePaneDirection 'Down',
+    },
+    {
+      key = 'LeftArrow',
+      action = wezterm.action.ActivatePaneDirection 'Left',
+    },
+    {
+      key = 'RightArrow',
+      action = wezterm.action.ActivatePaneDirection 'Right',
+    },
+  },
+
+  resize_pane = {
+    {
+      key = 'LeftArrow',
+      action = wezterm.action.AdjustPaneSize { 'Left', 12 },
+    },
+    {
+      key = 'DownArrow',
+      action = wezterm.action.AdjustPaneSize { 'Down', 3 },
+    },
+    { key = 'UpArrow', action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
+    {
+      key = 'RightArrow',
+      action = wezterm.action.AdjustPaneSize { 'Right', 12 },
+    },
+
+    { key = 'Escape',  action = 'PopKeyTable' },
   },
 }
 
@@ -149,11 +313,14 @@ wezterm.on('update-status', function(window, pane)
   local color = colors.tab_bar.active_tab.fg_color
   for _, item in ipairs(window:active_tab():panes_with_info()) do
     if item.is_active and item.is_zoomed then
-      color = colors.ansi[3]
+      color = colors.ansi[6]
     end
   end
   if window:composition_status() or window:leader_is_active() then
     color = colors.compose_cursor
+  end
+  if window:active_key_table() then
+    color = colors.ansi[3]
   end
 
   window:set_left_status(wezterm.format {
@@ -174,6 +341,5 @@ end)
 wezterm.on('format-window-title', function(tab)
   return tab.active_pane.title
 end)
-
 
 return config
