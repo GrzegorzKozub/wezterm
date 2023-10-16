@@ -345,6 +345,7 @@ config.key_tables = {
       key = 'RightArrow',
       action = wezterm.action.ActivatePaneDirection 'Right',
     },
+    { key = 'Escape',  action = 'PopKeyTable' },
   },
 
   resize_pane = {
