@@ -1,25 +1,9 @@
 local M = {}
 
 function M.config(wezterm, config)
-  local copy_mode = wezterm.gui.default_key_tables().copy_mode
-  table.insert(
-    copy_mode,
-
-    {
-
-
-      key = 'q',
-      mods = 'CTRL',
-      action = wezterm.action.CopyMode { SetSelectionMode = 'Block' },
-    }
-
-  )
-
-  config.leader = { key = 'x', mods = 'CTRL', timeout_milliseconds = 5000 }
+  config.leader = { mods = 'CTRL', key = 'x', timeout_milliseconds = 5000 }
 
   config.keys = {
-
-
     {
       key = 'f',
       mods = 'SHIFT|CTRL',
@@ -38,18 +22,11 @@ function M.config(wezterm, config)
       action = wezterm.action.ActivateCopyMode,
     },
 
-
-
-
     {
       key = 'PageUp',
       mods = 'CTRL|SHIFT',
       action = wezterm.action.ScrollByPage(-1),
     },
-
-
-
-
 
     {
       key = 'PageDown',
@@ -220,44 +197,27 @@ function M.config(wezterm, config)
     { key = 'RightArrow', mods = 'SHIFT|ALT', action = wezterm.action.RotatePanes 'Clockwise' },
   }
 
+  local copy_mode = wezterm.gui.default_key_tables().copy_mode
+  table.insert(copy_mode,
+    { mods = 'CTRL', key = 'q', action = wezterm.action.CopyMode { SetSelectionMode = 'Block' } })
+
   config.key_tables = {
     copy_mode = copy_mode,
+
     activate_pane = {
-      {
-        key = 'UpArrow',
-        action = wezterm.action.ActivatePaneDirection 'Up',
-      },
-      {
-        key = 'DownArrow',
-        action = wezterm.action.ActivatePaneDirection 'Down',
-      },
-      {
-        key = 'LeftArrow',
-        action = wezterm.action.ActivatePaneDirection 'Left',
-      },
-      {
-        key = 'RightArrow',
-        action = wezterm.action.ActivatePaneDirection 'Right',
-      },
-      { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'LeftArrow',  action = wezterm.action.ActivatePaneDirection 'Left' },
+      { key = 'DownArrow',  action = wezterm.action.ActivatePaneDirection 'Down' },
+      { key = 'UpArrow',    action = wezterm.action.ActivatePaneDirection 'Up' },
+      { key = 'RightArrow', action = wezterm.action.ActivatePaneDirection 'Right' },
+      { key = 'Escape',     action = 'PopKeyTable' },
     },
 
     resize_pane = {
-      {
-        key = 'LeftArrow',
-        action = wezterm.action.AdjustPaneSize { 'Left', 12 },
-      },
-      {
-        key = 'DownArrow',
-        action = wezterm.action.AdjustPaneSize { 'Down', 3 },
-      },
-      { key = 'UpArrow', action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
-      {
-        key = 'RightArrow',
-        action = wezterm.action.AdjustPaneSize { 'Right', 12 },
-      },
-
-      { key = 'Escape',  action = 'PopKeyTable' },
+      { key = 'LeftArrow',  action = wezterm.action.AdjustPaneSize { 'Left', 12 } },
+      { key = 'DownArrow',  action = wezterm.action.AdjustPaneSize { 'Down', 3 } },
+      { key = 'UpArrow',    action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
+      { key = 'RightArrow', action = wezterm.action.AdjustPaneSize { 'Right', 12 } },
+      { key = 'Escape',     action = 'PopKeyTable' },
     },
   }
 end
