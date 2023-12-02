@@ -4,220 +4,100 @@ function M.config(wezterm, config)
   config.leader = { mods = 'CTRL', key = 'x', timeout_milliseconds = 5000 }
 
   config.keys = {
-    {
-      key = 'f',
-      mods = 'SHIFT|CTRL',
-      action = wezterm.action.Search { CaseInSensitiveString = '' },
-    },
+    -- history
+
+    { mods = 'CTRL|SHIFT', key = 'UpArrow', action = wezterm.action.ScrollByLine(-1) },
+    { mods = 'CTRL|SHIFT', key = 'DownArrow', action = wezterm.action.ScrollByLine(1) },
+    { mods = 'CTRL|SHIFT', key = 'PageUp', action = wezterm.action.ScrollByPage(-1) },
+    { mods = 'CTRL|SHIFT', key = 'PageDown', action = wezterm.action.ScrollByPage(1) },
+
+    { mods = 'CTRL|SHIFT', key = 'Home', action = wezterm.action.ScrollToTop },
+    { mods = 'CTRL|SHIFT', key = 'End', action = wezterm.action.ScrollToBottom },
+
+    -- pane split
+
+    { mods = 'LEADER', key = 'h', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { mods = 'LEADER', key = 'v', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+
+    { mods = 'ALT|SHIFT', key = 'h', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { mods = 'ALT|SHIFT', key = 'v', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+
+    -- pane activation
 
     {
-      key = '{',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ActivateCopyMode,
-    },
-
-    {
-      key = '[',
       mods = 'LEADER',
-      action = wezterm.action.ActivateCopyMode,
-    },
-
-    {
-      key = 'PageUp',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollByPage(-1),
-    },
-
-    {
-      key = 'PageDown',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollByPage(1),
-    },
-
-    {
-      key = 'UpArrow',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollByLine(-1),
-    },
-
-    {
-      key = 'DownArrow',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollByLine(1),
-    },
-
-    {
-      key = 'Home',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollToTop,
-    },
-
-    {
-      key = 'End',
-      mods = 'CTRL|SHIFT',
-      action = wezterm.action.ScrollToBottom,
-    },
-
-    {
-      key = 'F1',
-      action = wezterm.action.ActivateCommandPalette,
-    },
-    {
-      key = 'h',
-      mods = 'LEADER',
-      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'v',
-      mods = 'LEADER',
-      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'h',
-      mods = 'ALT|SHIFT',
-      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'v',
-      mods = 'ALT|SHIFT',
-      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-    },
-    {
-      key = 'z',
-      mods = 'LEADER|SHIFT',
-      action = wezterm.action.TogglePaneZoomState,
-    },
-
-    -- tmux
-    {
-      key = 'UpArrow',
-      mods = 'LEADER',
-      action = wezterm.action.ActivatePaneDirection 'Up',
-    },
-    {
-      key = 'DownArrow',
-      mods = 'LEADER',
-      action = wezterm.action.ActivatePaneDirection 'Down',
-    },
-    {
-      key = 'LeftArrow',
-      mods = 'LEADER',
-      action = wezterm.action.ActivatePaneDirection 'Left',
-    },
-    {
-      key = 'RightArrow',
-      mods = 'LEADER',
-      action = wezterm.action.ActivatePaneDirection 'Right',
-    },
-
-    --wt
-    {
-      key = 'UpArrow',
-      mods = 'ALT',
-      action = wezterm.action.ActivatePaneDirection 'Up',
-    },
-    {
-      key = 'DownArrow',
-      mods = 'ALT',
-      action = wezterm.action.ActivatePaneDirection 'Down',
-    },
-    {
-      key = 'LeftArrow',
-      mods = 'ALT',
-      action = wezterm.action.ActivatePaneDirection 'Left',
-    },
-    {
-      key = 'RightArrow',
-      mods = 'ALT',
-      action = wezterm.action.ActivatePaneDirection 'Right',
-    },
-
-    -- wt
-    {
-      key = 'LeftArrow',
-      mods = 'ALT|CTRL',
-      action = wezterm.action.AdjustPaneSize { 'Left', 12 },
-    },
-    {
-      key = 'DownArrow',
-      mods = 'ALT|CTRL',
-      action = wezterm.action.AdjustPaneSize { 'Down', 3 },
-    },
-    { key = 'UpArrow',    mods = 'ALT|CTRL',  action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
-    {
-      key = 'RightArrow',
-      mods = 'ALT|CTRL',
-      action = wezterm.action.AdjustPaneSize { 'Right', 12 },
-    },
-
-    --tmux
-    {
-      key = 'r',
-      mods = 'LEADER',
-      action = wezterm.action.ActivateKeyTable {
-        name = 'resize_pane',
-        one_shot = false,
-        timeout_milliseconds = 1000,
-      },
-    },
-
-    {
       key = 'a',
+      action = wezterm.action.ActivateKeyTable { name = 'activate_pane', one_shot = false, timeout_milliseconds = 1000 },
+    },
+
+    { mods = 'LEADER', key = 'LeftArrow', action = wezterm.action.ActivatePaneDirection 'Left' },
+    { mods = 'LEADER', key = 'DownArrow', action = wezterm.action.ActivatePaneDirection 'Down' },
+    { mods = 'LEADER', key = 'UpArrow', action = wezterm.action.ActivatePaneDirection 'Up' },
+    { mods = 'LEADER', key = 'RightArrow', action = wezterm.action.ActivatePaneDirection 'Right' },
+
+    { mods = 'ALT', key = 'LeftArrow', action = wezterm.action.ActivatePaneDirection 'Left' },
+    { mods = 'ALT', key = 'DownArrow', action = wezterm.action.ActivatePaneDirection 'Down' },
+    { mods = 'ALT', key = 'UpArrow', action = wezterm.action.ActivatePaneDirection 'Up' },
+    { mods = 'ALT', key = 'RightArrow', action = wezterm.action.ActivatePaneDirection 'Right' },
+
+    -- pane size
+
+    {
       mods = 'LEADER',
-      action = wezterm.action.ActivateKeyTable {
-        name = 'activate_pane',
-        one_shot = false,
-        timeout_milliseconds = 1000,
-      },
+      key = 'r',
+      action = wezterm.action.ActivateKeyTable { name = 'resize_pane', one_shot = false, timeout_milliseconds = 1000 },
     },
 
-    -- tmux
-    {
-      key = 'z',
-      mods = 'LEADER',
-      action = wezterm.action.TogglePaneZoomState,
-    },
-    -- wt
-    {
-      key = 'z',
-      mods = 'ALT|SHIFT',
-      action = wezterm.action.TogglePaneZoomState,
-    },
+    { mods = 'ALT|CTRL', key = 'LeftArrow', action = wezterm.action.AdjustPaneSize { 'Left', 12 } },
+    { mods = 'ALT|CTRL', key = 'DownArrow', action = wezterm.action.AdjustPaneSize { 'Down', 3 } },
+    { mods = 'ALT|CTRL', key = 'UpArrow', action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
+    { mods = 'ALT|CTRL', key = 'RightArrow', action = wezterm.action.AdjustPaneSize { 'Right', 12 } },
 
-    {
-      key = 'F11',
-      action = wezterm.action.ToggleFullScreen,
-    },
+    -- pane rotation
 
-    {
-      key = 'LeftArrow',
-      mods = 'SHIFT|ALT',
-      action = wezterm.action.RotatePanes 'CounterClockwise',
-    },
-    { key = 'RightArrow', mods = 'SHIFT|ALT', action = wezterm.action.RotatePanes 'Clockwise' },
+    { mods = 'SHIFT|ALT', key = 'RightArrow', action = wezterm.action.RotatePanes 'Clockwise' },
+    { mods = 'SHIFT|ALT', key = 'LeftArrow', action = wezterm.action.RotatePanes 'CounterClockwise' },
+
+    -- pane zoom
+
+    { mods = 'LEADER', key = 'z', action = wezterm.action.TogglePaneZoomState },
+    { mods = 'ALT|SHIFT', key = 'z', action = wezterm.action.TogglePaneZoomState },
+
+    -- pane search
+
+    { mods = 'SHIFT|CTRL', key = 'f', action = wezterm.action.Search { CaseInSensitiveString = '' } },
+
+    -- copy mode
+
+    { mods = 'LEADER', key = '[', action = wezterm.action.ActivateCopyMode },
+    { mods = 'CTRL|SHIFT', key = '{', action = wezterm.action.ActivateCopyMode },
+
+    -- window
+
+    { key = 'F1', action = wezterm.action.ActivateCommandPalette },
+    { key = 'F11', action = wezterm.action.ToggleFullScreen },
   }
 
   local copy_mode = wezterm.gui.default_key_tables().copy_mode
-  table.insert(copy_mode,
-    { mods = 'CTRL', key = 'q', action = wezterm.action.CopyMode { SetSelectionMode = 'Block' } })
+  table.insert(copy_mode, { mods = 'CTRL', key = 'q', action = wezterm.action.CopyMode { SetSelectionMode = 'Block' } })
 
   config.key_tables = {
     copy_mode = copy_mode,
 
     activate_pane = {
-      { key = 'LeftArrow',  action = wezterm.action.ActivatePaneDirection 'Left' },
-      { key = 'DownArrow',  action = wezterm.action.ActivatePaneDirection 'Down' },
-      { key = 'UpArrow',    action = wezterm.action.ActivatePaneDirection 'Up' },
+      { key = 'LeftArrow', action = wezterm.action.ActivatePaneDirection 'Left' },
+      { key = 'DownArrow', action = wezterm.action.ActivatePaneDirection 'Down' },
+      { key = 'UpArrow', action = wezterm.action.ActivatePaneDirection 'Up' },
       { key = 'RightArrow', action = wezterm.action.ActivatePaneDirection 'Right' },
-      { key = 'Escape',     action = 'PopKeyTable' },
+      { key = 'Escape', action = 'PopKeyTable' },
     },
 
     resize_pane = {
-      { key = 'LeftArrow',  action = wezterm.action.AdjustPaneSize { 'Left', 12 } },
-      { key = 'DownArrow',  action = wezterm.action.AdjustPaneSize { 'Down', 3 } },
-      { key = 'UpArrow',    action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
+      { key = 'LeftArrow', action = wezterm.action.AdjustPaneSize { 'Left', 12 } },
+      { key = 'DownArrow', action = wezterm.action.AdjustPaneSize { 'Down', 3 } },
+      { key = 'UpArrow', action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
       { key = 'RightArrow', action = wezterm.action.AdjustPaneSize { 'Right', 12 } },
-      { key = 'Escape',     action = 'PopKeyTable' },
+      { key = 'Escape', action = 'PopKeyTable' },
     },
   }
 end
