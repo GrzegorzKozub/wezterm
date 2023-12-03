@@ -3,19 +3,19 @@ local M = {}
 function M.config(config)
   config.color_schemes = {
     ['Gruvbox Material Dark'] = {
-      background = '#32302f',     -- bg0
-      foreground = '#d4be98',     -- fg0
+      background = '#32302f', -- bg0
+      foreground = '#d4be98', -- fg0
 
-      cursor_bg = '#928374',      -- grey1
-      cursor_fg = '#32302f',      -- bg0
+      cursor_bg = '#928374', -- grey1
+      cursor_fg = '#32302f', -- bg0
 
-      cursor_border = '#928374',  -- grey1
+      cursor_border = '#928374', -- grey1
       compose_cursor = '#b47109', -- yellow
 
-      selection_bg = '#d4be98',   -- fg0
-      selection_fg = '#32302f',   -- bg0
+      selection_bg = 'rgba(102, 92, 84, 0.5)', -- bg5
+      selection_fg = 'none',
 
-      split = '#504945',          -- bg3
+      split = '#504945', -- bg3
 
       ansi = {
         '#3c3836', -- bg1
@@ -44,27 +44,27 @@ function M.config(config)
 
         active_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#665c54',             -- bg5
+          fg_color = '#665c54', -- bg5
         },
 
         inactive_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#504945',             -- bg3
+          fg_color = '#504945', -- bg3
         },
 
         inactive_tab_hover = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#928374',             -- grey1
+          fg_color = '#928374', -- grey1
         },
 
         new_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#504945',             -- bg3
+          fg_color = '#504945', -- bg3
         },
 
         new_tab_hover = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#928374',             -- grey1
+          fg_color = '#928374', -- grey1
         },
       },
     },
