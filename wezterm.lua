@@ -8,7 +8,7 @@ require('shell').config(config)
 require('colors').config(config)
 require('fonts').config(wezterm, config)
 
-require('windows').config(wezterm, config)
+require('window').config(wezterm, config)
 require('tabs').config(wezterm, config)
 require('panes').config(config)
 

@@ -76,6 +76,21 @@ function M.config(wezterm, config)
 
     { key = 'F1', action = wezterm.action.ActivateCommandPalette },
     { key = 'F11', action = wezterm.action.ToggleFullScreen },
+
+    {
+      mods = 'CTRL|SHIFT',
+      key = '_',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').decrease(window, config)
+      end),
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = '+',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').increase(window, config)
+      end),
+    },
   }
 
   local copy_mode = wezterm.gui.default_key_tables().copy_mode
