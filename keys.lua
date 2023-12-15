@@ -27,7 +27,11 @@ function M.config(wezterm, config)
     {
       mods = 'LEADER',
       key = 'a',
-      action = wezterm.action.ActivateKeyTable { name = 'activate_pane', one_shot = false, timeout_milliseconds = 1000 },
+      action = wezterm.action.ActivateKeyTable {
+        name = 'activate_pane',
+        one_shot = false,
+        timeout_milliseconds = 1000,
+      },
     },
 
     { mods = 'LEADER', key = 'LeftArrow', action = wezterm.action.ActivatePaneDirection 'Left' },

@@ -20,7 +20,9 @@ function M.config(wezterm, config)
   config.initial_rows = 40
 
   wezterm.on('gui-startup', function(cmd)
+    -- luacheck: push ignore 211
     local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+    -- luacheck: pop
     local screen = wezterm.gui.screens().active
     local dim = window:gui_window():get_dimensions()
     local left = (screen.width - dim.pixel_width) / 2

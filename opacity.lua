@@ -1,6 +1,6 @@
 local M = {}
 
-function adjust(window, config, delta)
+local function adjust(window, config, delta)
   local overrides = window:get_config_overrides() or {}
   local opacity = overrides.window_background_opacity or nil
   if not opacity then
