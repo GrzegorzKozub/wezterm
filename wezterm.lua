@@ -14,4 +14,6 @@ require('panes').config(config)
 
 require('keys').config(wezterm, config)
 
+require('updates').config(config)
+
 return config
