@@ -26,8 +26,9 @@ function M.config(wezterm, config)
     local screen = wezterm.gui.screens().active
     local dim = window:gui_window():get_dimensions()
     local left = (screen.width - dim.pixel_width) / 2
-    local top = (screen.height - dim.pixel_height) / 2 - 42 -- 4k taskbar
+    local top = (screen.height - dim.pixel_height) / 2 - 42 -- taskbar on 4k at 150%
     window:gui_window():set_position(left, top)
+    window:gui_window():set_inner_size(dim.pixel_width, dim.pixel_height)
   end)
 
   wezterm.on('format-window-title', function(tab)
