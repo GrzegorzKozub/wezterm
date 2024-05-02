@@ -3,6 +3,7 @@ local M = {}
 function M.config(wezterm, config)
   config.font = wezterm.font {
     family = 'CaskaydiaCove Nerd Font',
+    -- family = 'Cascadia Code NF',
     harfbuzz_features = { 'calt = 1', 'ss01 = 1' },
   }
 
