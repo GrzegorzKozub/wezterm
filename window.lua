@@ -2,7 +2,7 @@ local M = {}
 
 function M.config(wezterm, config)
   config.window_background_opacity = 0.95
-  config.win32_system_backdrop = 'Acrylic'
+  config.win32_system_backdrop = 'Mica'
 
   config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 
