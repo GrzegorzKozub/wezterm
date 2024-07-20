@@ -16,8 +16,8 @@ function M.config(wezterm, config)
 
   config.window_close_confirmation = 'NeverPrompt'
 
-  config.initial_cols = 160
-  config.initial_rows = 40
+  config.initial_cols = 120
+  config.initial_rows = 30
 
   wezterm.on('gui-startup', function(cmd)
     -- luacheck: push ignore 211
