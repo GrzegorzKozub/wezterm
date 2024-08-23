@@ -10,7 +10,7 @@ function M.config(wezterm, config)
   config.show_new_tab_button_in_tab_bar = false
 
   local new = '󰐕'
-  local close = ' 󰖭  '
+  local close = ' 󰖭 '
   local hide = ' 󰖰 '
   local maximize = ' 󰖯 '
 
@@ -48,7 +48,7 @@ function M.config(wezterm, config)
     window:set_left_status(wezterm.format {
       { Foreground = { Color = color } },
       { Background = { Color = colors.tab_bar.background } },
-      { Text = '  ●• ' },
+      { Text = ' ●• ' },
     } .. wezterm.format {
       { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
       { Background = { Color = colors.tab_bar.background } },
