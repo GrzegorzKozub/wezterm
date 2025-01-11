@@ -60,7 +60,7 @@ function M.config(wezterm, config)
     })
   end)
 
-  wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
     local title = string.gsub(tab.active_pane.title, 'Copy mode: ', '')
     return { { Text = string.format('%s:%s ', tab.tab_index, title) } }
   end)

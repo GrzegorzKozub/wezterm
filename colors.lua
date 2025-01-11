@@ -10,21 +10,19 @@ function M.config(config)
       cursor_fg = '#32302f', -- bg0
 
       cursor_border = '#928374', -- grey1
-      compose_cursor = '#b47109', -- yellow
+      compose_cursor = '#b47109', -- term_yellow
 
-      selection_bg = 'rgba(102, 92, 84, 0.5)', -- bg5
+      selection_bg = '#504945', -- bg3
       selection_fg = 'none',
-
-      split = '#504945', -- bg3
 
       ansi = {
         '#3c3836', -- bg1
-        '#c14a4a', -- red
-        '#6c782e', -- green
-        '#b47109', -- yellow
-        '#45707a', -- blue
-        '#945e80', -- magenta
-        '#4c7a5d', -- cyan
+        '#c14a4a', -- term_red
+        '#6c782e', -- term_green
+        '#b47109', -- term_yellow
+        '#45707a', -- term_blue
+        '#945e80', -- term_purple
+        '#4c7a5d', -- term_aqua
         '#928374', -- grey1
       },
 
@@ -34,10 +32,12 @@ function M.config(config)
         '#a9b665', -- green
         '#d8a657', -- yellow
         '#7daea3', -- blue
-        '#d3869b', -- magenta
-        '#89b482', -- cyan
+        '#d3869b', -- purple
+        '#89b482', -- aqua
         '#d4be98', -- fg0
       },
+
+      split = '#3c3836', -- bg1
 
       tab_bar = {
         background = 'rgba(50, 48, 47, 0)', -- bg0
@@ -49,7 +49,7 @@ function M.config(config)
 
         inactive_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#504945', -- bg3
+          fg_color = '#3c3836', -- bg1
         },
 
         inactive_tab_hover = {
@@ -59,7 +59,7 @@ function M.config(config)
 
         new_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#504945', -- bg3
+          fg_color = '#665c54', -- bg5
         },
 
         new_tab_hover = {
