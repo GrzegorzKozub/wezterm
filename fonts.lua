@@ -17,8 +17,8 @@ function M.config(wezterm, config)
   }
 
   config.font_size = 12.0
-  config.command_palette_font_size = 12.0
-  config.char_select_font_size = 12.0
+  config.command_palette_font_size = 11.0
+  config.char_select_font_size = 11.0
 end
 
 return M

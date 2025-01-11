@@ -74,10 +74,10 @@ function M.config(config)
 
   local colors = config.color_schemes[config.color_scheme]
 
-  config.command_palette_bg_color = colors.cursor_fg
+  config.command_palette_bg_color = colors.background
   config.command_palette_fg_color = colors.foreground
 
-  config.char_select_bg_color = colors.cursor_fg
+  config.char_select_bg_color = colors.background
   config.char_select_fg_color = colors.foreground
 
   config.colors = {
