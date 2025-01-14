@@ -71,10 +71,12 @@ function M.config(wezterm, config)
 
     { mods = 'SHIFT|CTRL', key = 'f', action = wezterm.action.Search { CaseInSensitiveString = '' } },
 
-    -- copy mode
+    -- tabs
 
-    { mods = 'LEADER', key = '[', action = wezterm.action.ActivateCopyMode },
-    { mods = 'CTRL|SHIFT', key = '{', action = wezterm.action.ActivateCopyMode },
+    { mods = 'LEADER', key = 'c', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
+
+    { mods = 'LEADER', key = 'p', action = wezterm.action.ActivateTabRelative(-1) },
+    { mods = 'LEADER', key = 'n', action = wezterm.action.ActivateTabRelative(1) },
 
     -- window
 
@@ -95,9 +97,15 @@ function M.config(wezterm, config)
         require('opacity').increase(window, config)
       end),
     },
+
+    -- copy mode
+
+    { mods = 'LEADER', key = '[', action = wezterm.action.ActivateCopyMode },
+    { mods = 'CTRL|SHIFT', key = '{', action = wezterm.action.ActivateCopyMode },
   }
 
   local copy_mode = wezterm.gui.default_key_tables().copy_mode
+  table.insert(copy_mode, { key = '/', action = wezterm.action.Search { CaseInSensitiveString = '' } })
   table.insert(copy_mode, { mods = 'CTRL', key = 'q', action = wezterm.action.CopyMode { SetSelectionMode = 'Block' } })
 
   config.key_tables = {
