@@ -116,6 +116,7 @@ function M.config(wezterm, config)
       { key = 'DownArrow', action = wezterm.action.ActivatePaneDirection 'Down' },
       { key = 'UpArrow', action = wezterm.action.ActivatePaneDirection 'Up' },
       { key = 'RightArrow', action = wezterm.action.ActivatePaneDirection 'Right' },
+      { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
     },
 
@@ -124,6 +125,7 @@ function M.config(wezterm, config)
       { key = 'DownArrow', action = wezterm.action.AdjustPaneSize { 'Down', 3 } },
       { key = 'UpArrow', action = wezterm.action.AdjustPaneSize { 'Up', 3 } },
       { key = 'RightArrow', action = wezterm.action.AdjustPaneSize { 'Right', 12 } },
+      { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
     },
   }
