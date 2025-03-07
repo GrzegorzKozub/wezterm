@@ -41,14 +41,16 @@ function M.config(wezterm, config)
     if window:composition_status() or window:leader_is_active() then
       color = colors.compose_cursor
     end
+    local kt = ''
     if window:active_key_table() then
+      kt = window:active_key_table() .. ' '
       color = colors.ansi[3]
     end
 
     window:set_left_status(wezterm.format {
       { Foreground = { Color = color } },
       { Background = { Color = colors.tab_bar.background } },
-      { Text = ' ●• ' },
+      { Text = ' ●• ' .. kt },
     } .. wezterm.format {
       { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
       { Background = { Color = colors.tab_bar.background } },
