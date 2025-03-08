@@ -49,7 +49,7 @@ function M.config(config)
 
         inactive_tab = {
           bg_color = 'rgba(50, 48, 47, 0)', -- bg0
-          fg_color = '#3c3836', -- bg1
+          fg_color = '#504945', -- bg3
         },
 
         inactive_tab_hover = {
