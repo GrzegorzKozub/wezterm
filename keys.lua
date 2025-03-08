@@ -5,7 +5,7 @@ function M.config(wezterm, config)
 
   config.leader = { mods = 'CTRL', key = 'x', timeout_milliseconds = 5000 }
 
-  -- TODO
+  -- copy_mode & search_mode (built-in)
 
   local copy = wezterm.gui.default_key_tables().copy_mode
   table.insert(copy, { key = '/', action = act.Search { CaseInSensitiveString = '' } })
@@ -15,33 +15,93 @@ function M.config(wezterm, config)
     copy_mode = copy,
 
     pane = {
+      { mods = 'ALT', key = 'P', action = 'PopKeyTable' },
+
       { key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
       { key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
       { key = 'UpArrow', action = act.ActivatePaneDirection 'Up' },
       { key = 'RightArrow', action = act.ActivatePaneDirection 'Right' },
+
+      { key = 'Tab', action = act.ActivatePaneDirection 'Next' },
+      { mods = 'SHIFT', key = 'Tab', action = act.ActivatePaneDirection 'Prev' },
+
+      {
+        key = 'r',
+        action = act.Multiple { act.SplitHorizontal { domain = 'CurrentPaneDomain' }, 'PopKeyTable' },
+      },
+      {
+        key = 'd',
+        action = act.Multiple { act.SplitVertical { domain = 'CurrentPaneDomain' }, 'PopKeyTable' },
+      },
+
+      { key = 'z', action = act.Multiple { act.TogglePaneZoomState, 'PopKeyTable' } },
+
       { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'q', action = 'PopKeyTable' },
     },
 
     resize = {
-      { key = 'LeftArrow', action = act.AdjustPaneSize { 'Left', 12 } },
-      { key = 'DownArrow', action = act.AdjustPaneSize { 'Down', 3 } },
-      { key = 'UpArrow', action = act.AdjustPaneSize { 'Up', 3 } },
-      { key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 12 } },
+      { mods = 'ALT', key = 'R', action = 'PopKeyTable' },
+
+      { key = 'LeftArrow', action = act.AdjustPaneSize { 'Left', 16 } },
+      { key = 'DownArrow', action = act.AdjustPaneSize { 'Down', 4 } },
+      { key = 'UpArrow', action = act.AdjustPaneSize { 'Up', 4 } },
+      { key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 16 } },
+
       { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'q', action = 'PopKeyTable' },
+    },
+
+    move = {
+      { mods = 'ALT', key = 'M', action = 'PopKeyTable' },
+
+      { key = 'RightArrow', action = act.RotatePanes 'Clockwise' },
+      { key = 'LeftArrow', action = act.RotatePanes 'CounterClockwise' },
+
+      { key = 'Enter', action = 'PopKeyTable' },
+      { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'q', action = 'PopKeyTable' },
+    },
+
+    tab = {
+      { mods = 'ALT', key = 'T', action = 'PopKeyTable' },
+
+      { key = 'n', action = act.Multiple { act.SpawnTab 'CurrentPaneDomain', 'PopKeyTable' } },
+
+      { key = 'LeftArrow', action = act.ActivateTabRelative(-1) },
+      { key = 'RightArrow', action = act.ActivateTabRelative(1) },
+
+      { key = '[', action = act.ActivateTabRelative(-1) },
+      { key = ']', action = act.ActivateTabRelative(1) },
+
+      { key = '1', action = act.Multiple { act.ActivateTab(0), 'PopKeyTable' } },
+      { key = '2', action = act.Multiple { act.ActivateTab(1), 'PopKeyTable' } },
+      { key = '3', action = act.Multiple { act.ActivateTab(2), 'PopKeyTable' } },
+      { key = '4', action = act.Multiple { act.ActivateTab(3), 'PopKeyTable' } },
+      { key = '5', action = act.Multiple { act.ActivateTab(4), 'PopKeyTable' } },
+      { key = '6', action = act.Multiple { act.ActivateTab(5), 'PopKeyTable' } },
+      { key = '7', action = act.Multiple { act.ActivateTab(6), 'PopKeyTable' } },
+      { key = '8', action = act.Multiple { act.ActivateTab(7), 'PopKeyTable' } },
+      { key = '9', action = act.Multiple { act.ActivateTab(8), 'PopKeyTable' } },
+
+      { key = 'Tab', action = 'ActivateLastTab' },
+
+      { key = 'Enter', action = 'PopKeyTable' },
+      { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'q', action = 'PopKeyTable' },
     },
   }
 
   config.keys = {
 
-    -- modes: copy_mode, dearch_mode, pane, resize
-    -- TODO
+    -- modes
 
-    { mods = 'LEADER', key = 'c', action = act.ActivateCopyMode },
+    { mods = 'LEADER', key = 'c', action = act.ActivateCopyMode }, -- copy_mode
     { mods = 'ALT', key = 'C', action = act.ActivateCopyMode },
 
-    { mods = 'SHIFT|CTRL', key = 'f', action = act.Search { CaseInSensitiveString = '' } },
+    { mods = 'ALT', key = 'F', action = act.Search { CaseInSensitiveString = '' } }, -- search_mode
 
     {
       mods = 'ALT',
@@ -55,34 +115,19 @@ function M.config(wezterm, config)
       action = act.ActivateKeyTable { name = 'resize', one_shot = false },
     },
 
-    -- panes
+    {
+      mods = 'ALT',
+      key = 'M',
+      action = act.ActivateKeyTable { name = 'move', one_shot = false },
+    },
 
-    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-    { mods = 'LEADER', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+    {
+      mods = 'ALT',
+      key = 'T',
+      action = act.ActivateKeyTable { name = 'tab', one_shot = false },
+    },
 
-    { mods = 'ALT', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-    { mods = 'ALT', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-
-    { mods = 'LEADER', key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
-    { mods = 'LEADER', key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
-    { mods = 'LEADER', key = 'UpArrow', action = act.ActivatePaneDirection 'Up' },
-    { mods = 'LEADER', key = 'RightArrow', action = act.ActivatePaneDirection 'Right' },
-
-    { mods = 'ALT', key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
-    { mods = 'ALT', key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
-    { mods = 'ALT', key = 'UpArrow', action = act.ActivatePaneDirection 'Up' },
-    { mods = 'ALT', key = 'RightArrow', action = act.ActivatePaneDirection 'Right' },
-
-    { mods = 'LEADER|CTRL', key = 'LeftArrow', action = act.AdjustPaneSize { 'Left', 16 } },
-    { mods = 'LEADER|CTRL', key = 'DownArrow', action = act.AdjustPaneSize { 'Down', 4 } },
-    { mods = 'LEADER|CTRL', key = 'UpArrow', action = act.AdjustPaneSize { 'Up', 4 } },
-    { mods = 'LEADER|CTRL', key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 16 } },
-
-    { mods = 'LEADER', key = 'z', action = act.TogglePaneZoomState },
-    { mods = 'ALT', key = 'z', action = act.TogglePaneZoomState },
-
-    { mods = 'LEADER|SHIFT', key = 'RightArrow', action = act.RotatePanes 'Clockwise' },
-    { mods = 'LEADER|SHIFT', key = 'LeftArrow', action = act.RotatePanes 'CounterClockwise' },
+    -- scroll
 
     { mods = 'CTRL|SHIFT', key = 'UpArrow', action = act.ScrollByLine(-1) },
     { mods = 'CTRL|SHIFT', key = 'DownArrow', action = act.ScrollByLine(1) },
@@ -93,13 +138,39 @@ function M.config(wezterm, config)
     { mods = 'CTRL|SHIFT', key = 'Home', action = act.ScrollToTop },
     { mods = 'CTRL|SHIFT', key = 'End', action = act.ScrollToBottom },
 
+    -- panes
+
+    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    { mods = 'LEADER', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+
+    { mods = 'ALT', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    { mods = 'ALT', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+
+    -- { mods = 'LEADER', key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
+    -- { mods = 'LEADER', key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
+    -- { mods = 'LEADER', key = 'UpArrow', action = act.ActivatePaneDirection 'Up' },
+    -- { mods = 'LEADER', key = 'RightArrow', action = act.ActivatePaneDirection 'Right' },
+
+    { mods = 'ALT', key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
+    { mods = 'ALT', key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
+    { mods = 'ALT', key = 'UpArrow', action = act.ActivatePaneDirection 'Up' },
+    { mods = 'ALT', key = 'RightArrow', action = act.ActivatePaneDirection 'Right' },
+
+    -- { mods = 'LEADER|CTRL', key = 'LeftArrow', action = act.AdjustPaneSize { 'Left', 16 } },
+    -- { mods = 'LEADER|CTRL', key = 'DownArrow', action = act.AdjustPaneSize { 'Down', 4 } },
+    -- { mods = 'LEADER|CTRL', key = 'UpArrow', action = act.AdjustPaneSize { 'Up', 4 } },
+    -- { mods = 'LEADER|CTRL', key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 16 } },
+
+    { mods = 'LEADER', key = 'z', action = act.TogglePaneZoomState },
+    { mods = 'ALT', key = 'z', action = act.TogglePaneZoomState },
+
+    -- { mods = 'LEADER|SHIFT', key = 'RightArrow', action = act.RotatePanes 'Clockwise' },
+    -- { mods = 'LEADER|SHIFT', key = 'LeftArrow', action = act.RotatePanes 'CounterClockwise' },
+
     -- tabs
-    -- TODO
 
-    { mods = 'LEADER', key = 'c', action = act.SpawnTab 'CurrentPaneDomain' },
-
-    { mods = 'LEADER', key = 'p', action = act.ActivateTabRelative(-1) },
-    { mods = 'LEADER', key = 'n', action = act.ActivateTabRelative(1) },
+    { mods = 'LEADER', key = '[', action = act.ActivateTabRelative(-1) },
+    { mods = 'LEADER', key = ']', action = act.ActivateTabRelative(1) },
 
     -- window
 
@@ -128,6 +199,9 @@ function M.config(wezterm, config)
     -- trash keys
 
     { mods = 'CTRL|SHIFT', key = 'x', action = act.Nop },
+
+    { mods = 'CTRL', key = 'PageUp', action = act.Nop },
+    { mods = 'CTRL', key = 'PageDown', action = act.Nop },
   }
 end
 
