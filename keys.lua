@@ -88,6 +88,17 @@ function M.config(wezterm, config)
 
       { key = 'Tab', action = 'ActivateLastTab' },
 
+      {
+        key = 'b',
+        action = act.Multiple {
+          wezterm.action_callback(function(window, pane)
+            pane:move_to_new_tab()
+            pane:activate()
+          end),
+          'PopKeyTable',
+        },
+      },
+
       { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
       { key = 'q', action = 'PopKeyTable' },
@@ -171,6 +182,15 @@ function M.config(wezterm, config)
 
     { mods = 'LEADER', key = '[', action = act.ActivateTabRelative(-1) },
     { mods = 'LEADER', key = ']', action = act.ActivateTabRelative(1) },
+
+    {
+      mods = 'LEADER',
+      key = 'b',
+      action = wezterm.action_callback(function(window, pane)
+        pane:move_to_new_tab()
+        pane:activate()
+      end),
+    },
 
     -- window
 
