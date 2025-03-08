@@ -6,7 +6,7 @@ function M.config(wezterm, config)
   config.use_fancy_tab_bar = false
   config.tab_bar_at_bottom = true
 
-  config.tab_max_width = 64
+  config.tab_max_width = 32
   config.show_new_tab_button_in_tab_bar = false
 
   local new = '󰐕'

@@ -6,7 +6,6 @@ function M.config(wezterm, config)
   config.leader = { mods = 'CTRL', key = 'x', timeout_milliseconds = 5000 }
 
   -- copy_mode & search_mode (built-in)
-
   local copy = wezterm.gui.default_key_tables().copy_mode
   table.insert(copy, { key = '/', action = act.Search { CaseInSensitiveString = '' } })
   table.insert(copy, { mods = 'CTRL', key = 'q', action = act.CopyMode { SetSelectionMode = 'Block' } })
@@ -106,7 +105,6 @@ function M.config(wezterm, config)
   }
 
   config.keys = {
-
     -- modes
 
     { mods = 'LEADER', key = 'c', action = act.ActivateCopyMode }, -- copy_mode
@@ -211,13 +209,25 @@ function M.config(wezterm, config)
         require('opacity').increase(window, config)
       end),
     },
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'Backspace',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').reset(window, config)
+      end),
+    },
 
     -- workarounds
 
     { mods = 'LEADER|CTRL', key = 'x', action = act.SendKey { mods = 'CTRL', key = 'x' } },
 
+    -- config
+
+    { mods = 'CTRL|SHIFT', key = 'F5', action = act.ReloadConfiguration },
+
     -- trash keys
 
+    { mods = 'CTRL|SHIFT', key = 'r', action = act.Nop },
     { mods = 'CTRL|SHIFT', key = 'x', action = act.Nop },
 
     { mods = 'CTRL', key = 'PageUp', action = act.Nop },

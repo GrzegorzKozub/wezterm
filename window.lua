@@ -6,11 +6,11 @@ function M.config(wezterm, config)
 
   config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 
-  config.window_padding = { left = 18, right = 18, top = 18, bottom = 4 }
+  config.window_padding = { left = 16, right = 16, top = 16, bottom = 0 }
 
   config.window_frame = {
     border_bottom_color = config.color_schemes[config.color_scheme].tab_bar.background,
-    border_bottom_height = 14,
+    border_bottom_height = 16,
     font = wezterm.font 'Segoe UI',
   }
 
