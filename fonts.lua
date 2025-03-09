@@ -30,7 +30,7 @@ function M.config(wezterm, config)
   config.custom_block_glyphs = false
 
   config.default_cursor_style = 'SteadyBar'
-  config.cursor_thickness = 4
+  config.cursor_thickness = '1pt'
   config.cursor_blink_rate = 1000
 end
 
