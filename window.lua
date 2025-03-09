@@ -2,7 +2,10 @@ local M = {}
 
 function M.config(wezterm, config)
   config.window_background_opacity = 0.95
-  config.win32_system_backdrop = 'Acrylic'
+
+  -- https://github.com/wezterm/wezterm/issues/5873
+  -- https://github.com/wezterm/wezterm/issues/6767
+  -- config.win32_system_backdrop = 'Tabbed'
 
   config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 
@@ -18,6 +21,8 @@ function M.config(wezterm, config)
 
   config.initial_cols = 120
   config.initial_rows = 30
+
+  config.adjust_window_size_when_changing_font_size = false
 
   wezterm.on('gui-startup', function(cmd)
     -- luacheck: push ignore 211

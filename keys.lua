@@ -35,6 +35,8 @@ function M.config(wezterm, config)
 
       { key = 'z', action = act.Multiple { act.TogglePaneZoomState, 'PopKeyTable' } },
 
+      { key = 'l', action = act.Multiple { act.QuickSelect, 'PopKeyTable' } },
+
       { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
       { key = 'q', action = 'PopKeyTable' },
@@ -176,6 +178,8 @@ function M.config(wezterm, config)
     -- { mods = 'LEADER|SHIFT', key = 'RightArrow', action = act.RotatePanes 'Clockwise' },
     -- { mods = 'LEADER|SHIFT', key = 'LeftArrow', action = act.RotatePanes 'CounterClockwise' },
 
+    { mods = 'LEADER', key = 'l', action = act.QuickSelect },
+
     -- tabs
 
     { mods = 'LEADER', key = '[', action = act.ActivateTabRelative(-1) },
@@ -227,6 +231,7 @@ function M.config(wezterm, config)
 
     -- trash keys
 
+    { mods = 'CTRL|SHIFT', key = ' ', action = act.Nop },
     { mods = 'CTRL|SHIFT', key = 'r', action = act.Nop },
     { mods = 'CTRL|SHIFT', key = 'x', action = act.Nop },
 
