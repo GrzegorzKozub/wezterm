@@ -36,9 +36,9 @@ function M.config(wezterm, config)
     window:gui_window():set_inner_size(dim.pixel_width, dim.pixel_height)
   end)
 
-  wezterm.on('format-window-title', function(tab)
-    return tab.active_pane.title
-  end)
+  -- wezterm.on('format-window-title', function(tab) -- pane, tabs, panes, config
+  --   return tab.active_pane.title
+  -- end)
 end
 
 return M

@@ -63,8 +63,26 @@ function M.config(wezterm, config)
   end)
 
   wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
-    local title = string.gsub(tab.active_pane.title, 'Copy mode: ', '')
-    return { { Text = string.format('%s:%s ', tab.tab_index, title) } }
+    -- todo: https://wezterm.org/config/lua/pane/get_progress.html
+    local color = colors.tab_bar.inactive_tab.fg_color
+    for _, pane in ipairs(tab.panes) do
+      if pane.has_unseen_output then
+        color = colors.tab_bar.active_tab.fg_color
+        break
+      end
+    end
+    return {
+      { Foreground = { Color = color } },
+      {
+        Text = string.format(
+          '%s:%s %s%s ',
+          tab.tab_index,
+          tab.active_pane.pane_index,
+          string.gsub(tab.active_pane.title, 'Copy mode: ', ''),
+          tab.active_pane.is_zoomed and ' ' or ''
+        ),
+      },
+    }
   end)
 end
 
