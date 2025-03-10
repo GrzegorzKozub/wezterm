@@ -1,5 +1,30 @@
 local M = {}
 
+local function mode(window, colors)
+  -- todo: different icon for composition/leader
+  if window:composition_status() or window:leader_is_active() then
+    return '', colors.compose_cursor
+  end
+  local key_table = window:active_key_table()
+  if key_table == 'pane' then
+    return '', colors.ansi[4]
+  end
+  return '󰞷', colors.tab_bar.active_tab.fg_color
+end
+
+local function tab_color(tab, colors)
+  if tab.is_active then
+    return colors.tab_bar.active_tab.fg_color
+  else
+    for _, pane in ipairs(tab.panes) do
+      if pane.has_unseen_output then
+        return colors.ansi[8]
+      end
+    end
+    return colors.tab_bar.inactive_tab.fg_color
+  end
+end
+
 function M.config(wezterm, config)
   local colors = config.color_schemes[config.color_scheme]
 
@@ -32,47 +57,27 @@ function M.config(wezterm, config)
   }
 
   wezterm.on('update-status', function(window, pane)
-    local color = colors.tab_bar.active_tab.fg_color
-    for _, item in ipairs(window:active_tab():panes_with_info()) do
-      if item.is_active and item.is_zoomed then
-        color = colors.ansi[6]
-      end
-    end
-    if window:composition_status() or window:leader_is_active() then
-      color = colors.compose_cursor
-    end
-    local kt = ''
-    if window:active_key_table() then
-      kt = window:active_key_table() .. ' '
-      color = colors.ansi[3]
-    end
-
+    local icon, color = mode(window, colors)
     window:set_left_status(wezterm.format {
       { Foreground = { Color = color } },
-      { Background = { Color = colors.tab_bar.background } },
-      { Text = ' ●• ' .. kt },
+      { Text = ' ' },
+    } .. wezterm.format {
+      { Foreground = { Color = colors.tab_bar.active_tab.bg_color } },
+      { Background = { Color = color } },
+      { Text = icon },
+    } .. wezterm.format {
+      { Foreground = { Color = color } },
+      { Text = ' ' },
     } .. wezterm.format {
       { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
-      { Background = { Color = colors.tab_bar.background } },
       { Text = pane:get_domain_name() .. ' ' },
-    } .. wezterm.format {
-      { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
-      { Background = { Color = colors.tab_bar.background } },
-      { Text = window:active_tab():tab_id() .. ':' .. pane:pane_id() .. ' ' },
     })
   end)
 
   wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
     -- todo: https://wezterm.org/config/lua/pane/get_progress.html
-    local color = colors.tab_bar.inactive_tab.fg_color
-    for _, pane in ipairs(tab.panes) do
-      if pane.has_unseen_output then
-        color = colors.tab_bar.active_tab.fg_color
-        break
-      end
-    end
     return {
-      { Foreground = { Color = color } },
+      { Foreground = { Color = tab_color(tab, colors) } },
       {
         Text = string.format(
           '%s:%s %s%s ',
