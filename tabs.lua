@@ -87,15 +87,23 @@ function M.config(wezterm, config)
 
   wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
     -- todo: https://wezterm.org/config/lua/pane/get_progress.html
+    -- todo: workaround process name
+    -- todo: use palette instead of theme?
+    -- todo: worspace, split this file into tabs and status
+    -- todo: https://github.com/michaelbrusegard/tabline.wez/tree/main/plugin/tabline/components/window
+    local workspace = wezterm.mux.get_active_workspace()
+    workspace = string.match(workspace, '[^/\\]+$')
     return {
       { Foreground = { Color = tab_color(tab, colors) } },
       {
         Text = string.format(
-          '%s:%s %s%s ',
+          '%s:%s %s%s',
           tab.tab_index,
           tab.active_pane.pane_index,
           string.gsub(tab.active_pane.title, 'Copy mode: ', ''),
           tab.active_pane.is_zoomed and ' ' or ''
+          -- workspace
+          -- tab.active_pane.foreground_process_name:match('([^/\\]+)[/\\]?$')
         ),
       },
     }

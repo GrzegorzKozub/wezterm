@@ -9,7 +9,7 @@ function M.config(wezterm, config)
 
   config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 
-  config.window_padding = { left = 16, right = 16, top = 16, bottom = 0 }
+  config.window_padding = { left = '8pt', right = '8pt', top = '8pt', bottom = 0 }
 
   config.window_frame = {
     border_bottom_color = config.color_schemes[config.color_scheme].tab_bar.background,
@@ -36,9 +36,15 @@ function M.config(wezterm, config)
     window:gui_window():set_inner_size(dim.pixel_width, dim.pixel_height)
   end)
 
-  -- wezterm.on('format-window-title', function(tab) -- pane, tabs, panes, config
-  --   return tab.active_pane.title
-  -- end)
+  wezterm.on('format-window-title', function(tab, pane) -- tabs, panes, config
+    return string.format(
+      '%s %s:%s %s',
+      pane.domain_name,
+      tab.tab_index,
+      tab.active_pane.pane_index,
+      tab.active_pane.title
+    )
+  end)
 end
 
 return M
