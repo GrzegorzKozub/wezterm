@@ -1,13 +1,24 @@
 local M = {}
 
+local palette = require('palette').gruvbox_material_dark()
+
 local function mode(window, colors)
-  -- todo: different icon for composition/leader
-  if window:composition_status() or window:leader_is_active() then
+  if window:leader_is_active() or window:composition_status() then
     return '', colors.compose_cursor
   end
   local key_table = window:active_key_table()
   if key_table == 'pane' then
     return '', colors.ansi[4]
+  elseif key_table == 'resize' then
+    return '󰁜', palette.term_orange
+  elseif key_table == 'move' then
+    return '󰁔', colors.ansi[2]
+  elseif key_table == 'tab' then
+    return '', colors.ansi[5]
+  elseif key_table == 'copy_mode' then
+    return '󰁝', colors.ansi[3]
+  elseif key_table == 'search_mode' then
+    return '', colors.ansi[7]
   end
   return '󰞷', colors.tab_bar.active_tab.fg_color
 end

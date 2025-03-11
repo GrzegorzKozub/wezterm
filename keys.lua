@@ -231,12 +231,12 @@ function M.config(wezterm, config)
 
     -- trash keys
 
-    { mods = 'CTRL|SHIFT', key = ' ', action = act.Nop },
-    { mods = 'CTRL|SHIFT', key = 'r', action = act.Nop },
-    { mods = 'CTRL|SHIFT', key = 'x', action = act.Nop },
+    { mods = 'CTRL|SHIFT', key = 'Space', action = act.DisableDefaultAssignment },
+    { mods = 'CTRL|SHIFT', key = 'r', action = act.DisableDefaultAssignment },
+    { mods = 'CTRL|SHIFT', key = 'x', action = act.DisableDefaultAssignment },
 
-    { mods = 'CTRL', key = 'PageUp', action = act.Nop },
-    { mods = 'CTRL', key = 'PageDown', action = act.Nop },
+    { mods = 'CTRL', key = 'PageUp', action = act.DisableDefaultAssignment },
+    { mods = 'CTRL', key = 'PageDown', action = act.DisableDefaultAssignment },
   }
 end
 
