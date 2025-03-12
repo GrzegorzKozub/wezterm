@@ -7,7 +7,7 @@ function M.config(wezterm, config)
   -- https://github.com/wezterm/wezterm/issues/6767
   -- config.win32_system_backdrop = 'Tabbed'
 
-  config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
+  config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 
   config.window_padding = { left = '8pt', right = '8pt', top = '8pt', bottom = 0 }
 
@@ -38,7 +38,8 @@ function M.config(wezterm, config)
 
   wezterm.on('format-window-title', function(tab, pane) -- tabs, panes, config
     return string.format(
-      '%s %s:%s %s',
+      '%s %s %s:%s %s',
+      wezterm.mux.get_active_workspace(),
       pane.domain_name,
       tab.tab_index,
       tab.active_pane.pane_index,

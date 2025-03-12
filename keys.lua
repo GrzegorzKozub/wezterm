@@ -35,7 +35,21 @@ function M.config(wezterm, config)
 
       { key = 'z', action = act.Multiple { act.TogglePaneZoomState, 'PopKeyTable' } },
 
-      { key = 'l', action = act.Multiple { act.QuickSelect, 'PopKeyTable' } },
+      { key = 'q', action = act.Multiple { act.QuickSelect, 'PopKeyTable' } },
+      {
+        key = 'l',
+        action = act.Multiple {
+          act.QuickSelectArgs {
+            label = 'open',
+            patterns = { 'https?://\\S+' },
+            skip_action_on_paste = true,
+            action = wezterm.action_callback(function(window, pane)
+              wezterm.open_with(window:get_selection_text_for_pane(pane))
+            end),
+          },
+          'PopKeyTable',
+        },
+      },
 
       { key = 'Enter', action = 'PopKeyTable' },
       { key = 'Escape', action = 'PopKeyTable' },
@@ -104,6 +118,22 @@ function M.config(wezterm, config)
       { key = 'Escape', action = 'PopKeyTable' },
       { key = 'q', action = 'PopKeyTable' },
     },
+
+    mux = {
+      { mods = 'ALT', key = 'O', action = 'PopKeyTable' },
+
+      {
+        key = 'o',
+        action = act.Multiple {
+          act.ShowLauncherArgs {
+            title = 'mux',
+            fuzzy_help_text = 'Mux: ',
+            flags = 'FUZZY|WORKSPACES|DOMAINS',
+          },
+          'PopKeyTable',
+        },
+      },
+    },
   }
 
   config.keys = {
@@ -136,6 +166,12 @@ function M.config(wezterm, config)
       mods = 'ALT',
       key = 'T',
       action = act.ActivateKeyTable { name = 'tab', one_shot = false },
+    },
+
+    {
+      mods = 'ALT',
+      key = 'O',
+      action = act.ActivateKeyTable { name = 'mux', one_shot = false },
     },
 
     -- scroll
@@ -178,7 +214,22 @@ function M.config(wezterm, config)
     -- { mods = 'LEADER|SHIFT', key = 'RightArrow', action = act.RotatePanes 'Clockwise' },
     -- { mods = 'LEADER|SHIFT', key = 'LeftArrow', action = act.RotatePanes 'CounterClockwise' },
 
-    { mods = 'LEADER', key = 'l', action = act.QuickSelect },
+    { mods = 'LEADER', key = 'q', action = act.QuickSelect },
+    {
+      mods = 'LEADER',
+      key = 'l',
+      action = act.Multiple {
+        act.QuickSelectArgs {
+          label = 'open',
+          patterns = { 'https?://\\S+' },
+          skip_action_on_paste = true,
+          action = wezterm.action_callback(function(window, pane)
+            wezterm.open_with(window:get_selection_text_for_pane(pane))
+          end),
+        },
+        'PopKeyTable',
+      },
+    },
 
     -- tabs
 
@@ -192,6 +243,18 @@ function M.config(wezterm, config)
         pane:move_to_new_tab()
         pane:activate()
       end),
+    },
+
+    -- mux
+
+    {
+      mods = 'LEADER',
+      key = 'o',
+      action = act.ShowLauncherArgs {
+        title = 'mux',
+        fuzzy_help_text = 'Mux: ',
+        flags = 'FUZZY|WORKSPACES|DOMAINS',
+      },
     },
 
     -- window
