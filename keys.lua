@@ -1,5 +1,7 @@
 local M = {}
 
+local palette = require('palette').gruvbox_material_dark()
+
 function M.config(wezterm, config)
   local act = wezterm.action
 
@@ -127,12 +129,34 @@ function M.config(wezterm, config)
         action = act.Multiple {
           act.ShowLauncherArgs {
             title = 'mux',
-            fuzzy_help_text = 'Mux: ',
+            fuzzy_help_text = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'Mux: ' } },
             flags = 'FUZZY|WORKSPACES|DOMAINS',
           },
           'PopKeyTable',
         },
       },
+
+      {
+        key = 'n',
+        action = act.Multiple {
+          act.PromptInputLine {
+            description = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'New workspace:' } },
+            action = wezterm.action_callback(function(window, pane, line)
+              if line then
+                window:perform_action(act.SwitchToWorkspace { name = line }, pane)
+              end
+            end),
+          },
+          'PopKeyTable',
+        },
+      },
+
+      { key = 'LeftArrow', action = act.SwitchWorkspaceRelative(-1) },
+      { key = 'RightArrow', action = act.SwitchWorkspaceRelative(1) },
+
+      { key = 'Enter', action = 'PopKeyTable' },
+      { key = 'Escape', action = 'PopKeyTable' },
+      { key = 'q', action = 'PopKeyTable' },
     },
   }
 
@@ -252,7 +276,7 @@ function M.config(wezterm, config)
       key = 'o',
       action = act.ShowLauncherArgs {
         title = 'mux',
-        fuzzy_help_text = 'Mux: ',
+        fuzzy_help_text = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'Mux: ' } },
         flags = 'FUZZY|WORKSPACES|DOMAINS',
       },
     },
