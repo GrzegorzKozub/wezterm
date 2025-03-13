@@ -1,24 +1,20 @@
 local M = {}
 
 function M.config(wezterm, config)
-  local font = {
+  config.font = wezterm.font {
     family = 'Cascadia Code NF',
     harfbuzz_features = { 'calt = 1', 'ss01 = 1' },
   }
-  config.font = wezterm.font(font)
-
-  -- font.weight = 'DemiLight'
-  config.font_rules = {
-    {
-      intensity = 'Half',
-      italic = false,
-      font = wezterm.font(font),
-    },
-  }
-
   config.font_size = 12.0
+
+  config.command_palette_font = wezterm.font 'Segoe UI'
   config.command_palette_font_size = 11.0
+
+  config.char_select_font = wezterm.font 'Segoe UI'
   config.char_select_font_size = 11.0
+
+  config.pane_select_font = wezterm.font 'Segoe UI'
+  config.pane_select_font_size = 32.0
 
   config.strikethrough_position = '8pt'
   config.underline_position = '-1pt'

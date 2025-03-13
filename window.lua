@@ -9,12 +9,11 @@ function M.config(wezterm, config)
 
   config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 
-  config.window_padding = { left = '8pt', right = '8pt', top = '8pt', bottom = 0 }
+  config.window_padding = { left = '8pt', bottom = 0, top = '8pt', right = '8pt' }
 
   config.window_frame = {
     border_bottom_color = config.color_schemes[config.color_scheme].tab_bar.background,
     border_bottom_height = '8pt',
-    font = wezterm.font 'Segoe UI',
   }
 
   config.window_close_confirmation = 'NeverPrompt'

@@ -43,7 +43,7 @@ function M.config(wezterm, config)
         action = act.Multiple {
           act.QuickSelectArgs {
             label = 'open',
-            patterns = { 'https?://\\S+' },
+            patterns = { 'https?://[^\\s)]+' },
             skip_action_on_paste = true,
             action = wezterm.action_callback(function(window, pane)
               wezterm.open_with(window:get_selection_text_for_pane(pane))
@@ -245,7 +245,7 @@ function M.config(wezterm, config)
       action = act.Multiple {
         act.QuickSelectArgs {
           label = 'open',
-          patterns = { 'https?://\\S+' },
+          patterns = { 'https?://[^\\s)]+' },
           skip_action_on_paste = true,
           action = wezterm.action_callback(function(window, pane)
             wezterm.open_with(window:get_selection_text_for_pane(pane))

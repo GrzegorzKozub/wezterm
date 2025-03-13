@@ -80,6 +80,9 @@ function M.config(config)
   config.char_select_bg_color = colors.background
   config.char_select_fg_color = colors.foreground
 
+  config.pane_select_bg_color = colors.brights[1]
+  config.pane_select_fg_color = colors.background
+
   config.colors = {
     copy_mode_active_highlight_bg = { Color = colors.ansi[4] },
     copy_mode_active_highlight_fg = { Color = colors.background },
@@ -92,6 +95,9 @@ function M.config(config)
 
     quick_select_match_bg = { Color = colors.brights[4] },
     quick_select_match_fg = { Color = colors.background },
+
+    input_selector_label_bg = { Color = colors.background },
+    input_selector_label_fg = { Color = colors.ansi[8] },
   }
 
   config.bold_brightens_ansi_colors = 'No'
