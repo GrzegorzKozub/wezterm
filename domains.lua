@@ -1,6 +1,7 @@
 local M = {}
 
 -- todo: https://wezterm.org/recipes/workspaces.html
+-- todo: https://wezterm.org/multiplexing.html
 
 function M.config(config)
   config.default_prog = { 'pwsh.exe', '-NoLogo' }
