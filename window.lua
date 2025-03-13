@@ -13,7 +13,7 @@ function M.config(wezterm, config)
 
   config.window_frame = {
     border_bottom_color = config.color_schemes[config.color_scheme].tab_bar.background,
-    border_bottom_height = 16,
+    border_bottom_height = '8pt',
     font = wezterm.font 'Segoe UI',
   }
 
