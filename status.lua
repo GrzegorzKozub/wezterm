@@ -1,12 +1,13 @@
 local M = {}
 
--- todo: https://github.com/michaelbrusegard/tabline.wez/tree/main/plugin/tabline/components/window
-
 local palette = require('palette').gruvbox_material_dark()
+local monitor = require 'monitor'
 
 local function mode(window, colors)
-  if window:leader_is_active() or window:composition_status() then
+  if window:leader_is_active() then
     return '', colors.compose_cursor
+  elseif window:composition_status() then
+    return '󰬴', colors.compose_cursor
   end
   local key_table = window:active_key_table()
   if key_table == 'pane' then
@@ -49,6 +50,7 @@ function M.config(wezterm, config)
       { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
       { Text = pane:get_domain_name() .. ' ' },
     })
+    window:set_right_status(wezterm.format { { Text = monitor.cpu(wezterm) } })
   end)
 end
 
