@@ -211,7 +211,7 @@ function M.config(wezterm, config)
 
     -- panes
 
-    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain', args = { 'pwsh', '-nologo' } } },
     { mods = 'LEADER', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
 
     { mods = 'ALT', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },

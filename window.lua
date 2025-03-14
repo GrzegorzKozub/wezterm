@@ -23,17 +23,17 @@ function M.config(wezterm, config)
 
   config.adjust_window_size_when_changing_font_size = false
 
-  wezterm.on('gui-startup', function(cmd)
-    -- luacheck: push ignore 211
-    local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-    -- luacheck: pop
-    local screen = wezterm.gui.screens().active
-    local dim = window:gui_window():get_dimensions()
-    local left = (screen.width - dim.pixel_width) / 2
-    local top = (screen.height - dim.pixel_height) / 2 - 84 -- taskbar on 4k at 200%
-    window:gui_window():set_position(left, top)
-    window:gui_window():set_inner_size(dim.pixel_width, dim.pixel_height)
-  end)
+  -- wezterm.on('gui-startup', function(cmd)
+  --   -- luacheck: push ignore 211
+  --   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+  --   -- luacheck: pop
+  --   local screen = wezterm.gui.screens().active
+  --   local dim = window:gui_window():get_dimensions()
+  --   local left = (screen.width - dim.pixel_width) / 2
+  --   local top = (screen.height - dim.pixel_height) / 2 - 84 -- taskbar on 4k at 200%
+  --   window:gui_window():set_position(left, top)
+  --   window:gui_window():set_inner_size(dim.pixel_width, dim.pixel_height)
+  -- end)
 
   wezterm.on('format-window-title', function(tab, pane) -- tabs, panes, config
     return string.format(

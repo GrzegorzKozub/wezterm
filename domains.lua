@@ -1,21 +1,19 @@
 local M = {}
 
--- todo: https://wezterm.org/recipes/workspaces.html
--- todo: https://wezterm.org/multiplexing.html
-
 function M.config(config)
   config.default_prog = { 'pwsh.exe', '-NoLogo' }
   config.ssh_domains = {}
+  config.unix_domains = {
+    {
+      name = 'unix',
+      serve_command = { 'wezterm-mux-server', '--daemonize', 'pwsh.exe', '-NoLogo' },
+      skip_permissions_check = true,
+    },
+  }
 
-  -- config.quit_when_all_windows_are_closed = false
-  -- config.unix_domains = {
-  --   {
-  --     name = 'unix1',
-  --     serve_command = { 'wezterm-mux-server' },
-  --   },
-  -- }
-  -- config.default_mux_server_domain = 'unix1'
-  -- config.default_gui_startup_args = { 'connect', 'unix1' }
+  -- seems this works as well as the one below
+  config.default_domain = 'unix'
+  -- config.default_gui_startup_args = { 'connect', 'unix', 'pwsh.exe', '-NoLogo' }
 end
 
 return M
