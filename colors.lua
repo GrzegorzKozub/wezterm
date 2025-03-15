@@ -40,30 +40,30 @@ function M.config(config)
       split = '#3c3836', -- bg1
 
       tab_bar = {
-        background = 'rgba(50, 48, 47, 0)', -- bg0
+        background = 'rgba(0, 0, 0, 0)',
 
         active_tab = {
-          bg_color = 'rgba(50, 48, 47, 0)', -- bg0
+          bg_color = 'rgba(0, 0, 0, 0)',
           fg_color = '#665c54', -- bg5
         },
 
         inactive_tab = {
-          bg_color = 'rgba(50, 48, 47, 0)', -- bg0
+          bg_color = 'rgba(0, 0, 0, 0)',
           fg_color = '#504945', -- bg3
         },
 
         inactive_tab_hover = {
-          bg_color = 'rgba(50, 48, 47, 0)', -- bg0
+          bg_color = 'rgba(0, 0, 0, 0)',
           fg_color = '#928374', -- grey1
         },
 
         new_tab = {
-          bg_color = 'rgba(50, 48, 47, 0)', -- bg0
+          bg_color = 'rgba(0, 0, 0, 0)',
           fg_color = '#665c54', -- bg5
         },
 
         new_tab_hover = {
-          bg_color = 'rgba(50, 48, 47, 0)', -- bg0
+          bg_color = 'rgba(0, 0, 0, 0)',
           fg_color = '#928374', -- grey1
         },
       },
