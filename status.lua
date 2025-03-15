@@ -47,17 +47,17 @@ function M.config(wezterm, config)
       { Foreground = { Color = color } },
       { Text = ' ' },
     } .. wezterm.format {
-      { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
+      { Foreground = { Color = colors.tab_bar.inactive_tab.fg_color } },
       { Text = wezterm.mux.get_active_workspace() .. ' ' },
     } .. wezterm.format {
-      { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
+      { Foreground = { Color = colors.tab_bar.inactive_tab.fg_color } },
       { Text = pane:get_domain_name() .. ' ' },
     })
 
     window:set_right_status(wezterm.format {
-      { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
-      { Text = sys.stats(wezterm) .. ' ' },
-    })
+      { Foreground = { Color = colors.tab_bar.inactive_tab.fg_color } },
+      { Text = ' ' },
+    } .. sys.stats(wezterm, colors))
   end)
 end
 

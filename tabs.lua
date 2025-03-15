@@ -1,8 +1,6 @@
 local M = {}
 
--- todo: https://wezterm.org/config/lua/pane/get_progress.html
-
-local function color(tab, colors)
+local function fg_color(tab, colors)
   if tab.is_active then
     return colors.tab_bar.active_tab.fg_color
   else
@@ -15,13 +13,38 @@ local function color(tab, colors)
   end
 end
 
+local function progress_icon(percentage)
+  local icons = { '󰪞', '󰪟', '󰪠', '󰪡', '󰪢', '󰪣', '󰪤', '󰪥' }
+  return icons[math.floor(percentage / 12) + 1]
+end
+
+local function progress(pane, colors)
+  local icon, color = nil, colors.tab_bar.active_tab.fg_color
+  if pane.progress then
+    if pane.progress.Percentage ~= nil then
+      icon = progress_icon(pane.progress.Percentage)
+      color = colors.ansi[3]
+    elseif pane.progress.Error ~= nil then
+      icon = progress_icon(pane.progress.Error)
+      color = colors.ansi[2]
+    elseif pane.progress == 'Indeterminate' then
+      icon = '󰪡'
+      color = colors.ansi[5]
+    end
+  end
+  return {
+    { Foreground = { Color = color } },
+    { Text = icon and icon .. ' ' or '' },
+  }
+end
+
 function M.config(wezterm, config)
   local colors = config.color_schemes[config.color_scheme]
 
   config.use_fancy_tab_bar = false
   config.tab_bar_at_bottom = true
 
-  config.tab_max_width = 32
+  config.tab_max_width = 64
   config.show_new_tab_button_in_tab_bar = false
 
   local new = '󰐕'
@@ -47,17 +70,19 @@ function M.config(wezterm, config)
   }
 
   wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
-    return {
-      { Foreground = { Color = color(tab, colors) } },
+    return wezterm.format {
+      { Foreground = { Color = fg_color(tab, colors) } },
       {
         Text = string.format(
-          '%s:%s %s%s ',
+          '%s:%s %s ',
           tab.tab_index,
           tab.active_pane.pane_index,
-          string.gsub(tab.active_pane.title, 'Copy mode: ', ''),
-          tab.active_pane.is_zoomed and ' ' or ''
+          string.gsub(tab.active_pane.title, 'Copy mode: ', '')
         ),
       },
+    } .. wezterm.format(progress(tab.active_pane, colors)) .. wezterm.format {
+      { Foreground = { Color = fg_color(tab, colors) } },
+      { Text = tab.active_pane.is_zoomed and ' ' or '' },
     }
   end)
 end

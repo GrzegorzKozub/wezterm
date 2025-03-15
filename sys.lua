@@ -3,7 +3,7 @@ local M = {}
 local last_update_time = 0
 local last_result = ''
 
-function M.stats(wezterm)
+function M.stats(wezterm, colors)
   local cpu_usage = '?'
   local current_time = os.time()
   if current_time - last_update_time < 15 then
@@ -18,14 +18,17 @@ function M.stats(wezterm)
   if success then
     local usage = stdout:match '%d+%.?%d*'
     if usage then
-      cpu_usage = string.format('%.1f', tonumber(usage)) .. '%'
+      cpu_usage = string.format('%.1f', tonumber(usage)) .. '% 0.0G'
     end
   end
 
   last_update_time = current_time
-  last_result = cpu_usage
+  last_result = wezterm.format {
+    { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
+    { Text = cpu_usage .. ' ' },
+  }
 
-  return tostring(cpu_usage)
+  return last_result
 end
 
 return M
