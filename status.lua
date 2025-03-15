@@ -37,7 +37,7 @@ function M.config(wezterm, config)
       { Foreground = { Color = color } },
       { Text = ' ' },
     } .. wezterm.format {
-      { Foreground = { Color = colors.tab_bar.active_tab.bg_color } },
+      { Foreground = { Color = colors.background } },
       { Background = { Color = color } },
       { Text = icon },
     } .. wezterm.format {
