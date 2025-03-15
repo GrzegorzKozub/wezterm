@@ -1,7 +1,7 @@
 local M = {}
 
 local palette = require('palette').gruvbox_material_dark()
-local monitor = require 'monitor'
+local sys = require 'sys'
 
 local function mode(window, colors)
   if window:leader_is_active() then
@@ -9,6 +9,7 @@ local function mode(window, colors)
   elseif window:composition_status() then
     return '󰬴', colors.compose_cursor
   end
+
   local key_table = window:active_key_table()
   if key_table == 'pane' then
     return '', colors.ansi[4]
@@ -25,6 +26,7 @@ local function mode(window, colors)
   elseif key_table == 'search_mode' then
     return '', colors.ansi[7]
   end
+
   return '󰞷', colors.tab_bar.active_tab.fg_color
 end
 
@@ -33,6 +35,7 @@ function M.config(wezterm, config)
 
   wezterm.on('update-status', function(window, pane)
     local icon, color = mode(window, colors)
+
     window:set_left_status(wezterm.format {
       { Foreground = { Color = color } },
       { Text = ' ' },
@@ -50,7 +53,11 @@ function M.config(wezterm, config)
       { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
       { Text = pane:get_domain_name() .. ' ' },
     })
-    window:set_right_status(wezterm.format { { Text = monitor.cpu(wezterm) } })
+
+    window:set_right_status(wezterm.format {
+      { Foreground = { Color = colors.tab_bar.active_tab.fg_color } },
+      { Text = sys.stats(wezterm) .. ' ' },
+    })
   end)
 end
 

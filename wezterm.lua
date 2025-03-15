@@ -5,10 +5,10 @@ require('options').config(config)
 
 require('renderer').config(config)
 
-require('domains').config(config)
-
 require('colors').config(config)
 require('fonts').config(wezterm, config)
+
+require('domains').config(config)
 
 require('window').config(wezterm, config)
 

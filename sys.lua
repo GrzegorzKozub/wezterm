@@ -3,7 +3,7 @@ local M = {}
 local last_update_time = 0
 local last_result = ''
 
-function M.cpu(wezterm)
+function M.stats(wezterm)
   local cpu_usage = '?'
   local current_time = os.time()
   if current_time - last_update_time < 15 then

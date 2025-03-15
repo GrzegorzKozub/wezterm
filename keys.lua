@@ -5,6 +5,8 @@ local palette = require('palette').gruvbox_material_dark()
 function M.config(wezterm, config)
   local act = wezterm.action
 
+  local spawn = { domain = 'CurrentPaneDomain', args = config.default_prog }
+
   config.leader = { mods = 'CTRL', key = 'x', timeout_milliseconds = 5000 }
 
   -- copy_mode & search_mode (built-in)
@@ -26,14 +28,8 @@ function M.config(wezterm, config)
       { key = 'Tab', action = act.ActivatePaneDirection 'Next' },
       { mods = 'SHIFT', key = 'Tab', action = act.ActivatePaneDirection 'Prev' },
 
-      {
-        key = 'r',
-        action = act.Multiple { act.SplitHorizontal { domain = 'CurrentPaneDomain' }, 'PopKeyTable' },
-      },
-      {
-        key = 'd',
-        action = act.Multiple { act.SplitVertical { domain = 'CurrentPaneDomain' }, 'PopKeyTable' },
-      },
+      { key = 'r', action = act.Multiple { act.SplitHorizontal(spawn), 'PopKeyTable' } },
+      { key = 'd', action = act.Multiple { act.SplitVertical(spawn), 'PopKeyTable' } },
 
       { key = 'z', action = act.Multiple { act.TogglePaneZoomState, 'PopKeyTable' } },
 
@@ -85,7 +81,7 @@ function M.config(wezterm, config)
     tab = {
       { mods = 'ALT', key = 'T', action = 'PopKeyTable' },
 
-      { key = 'n', action = act.Multiple { act.SpawnTab 'CurrentPaneDomain', 'PopKeyTable' } },
+      { key = 'n', action = act.Multiple { act.SpawnCommandInNewTab(spawn), 'PopKeyTable' } },
 
       { key = 'LeftArrow', action = act.ActivateTabRelative(-1) },
       { key = 'RightArrow', action = act.ActivateTabRelative(1) },
@@ -168,35 +164,11 @@ function M.config(wezterm, config)
 
     { mods = 'ALT', key = 'F', action = act.Search { CaseInSensitiveString = '' } }, -- search_mode
 
-    {
-      mods = 'ALT',
-      key = 'P',
-      action = act.ActivateKeyTable { name = 'pane', one_shot = false },
-    },
-
-    {
-      mods = 'ALT',
-      key = 'R',
-      action = act.ActivateKeyTable { name = 'resize', one_shot = false },
-    },
-
-    {
-      mods = 'ALT',
-      key = 'M',
-      action = act.ActivateKeyTable { name = 'move', one_shot = false },
-    },
-
-    {
-      mods = 'ALT',
-      key = 'T',
-      action = act.ActivateKeyTable { name = 'tab', one_shot = false },
-    },
-
-    {
-      mods = 'ALT',
-      key = 'O',
-      action = act.ActivateKeyTable { name = 'mux', one_shot = false },
-    },
+    { mods = 'ALT', key = 'P', action = act.ActivateKeyTable { name = 'pane', one_shot = false } },
+    { mods = 'ALT', key = 'R', action = act.ActivateKeyTable { name = 'resize', one_shot = false } },
+    { mods = 'ALT', key = 'M', action = act.ActivateKeyTable { name = 'move', one_shot = false } },
+    { mods = 'ALT', key = 'T', action = act.ActivateKeyTable { name = 'tab', one_shot = false } },
+    { mods = 'ALT', key = 'O', action = act.ActivateKeyTable { name = 'mux', one_shot = false } },
 
     -- scroll
 
@@ -211,11 +183,11 @@ function M.config(wezterm, config)
 
     -- panes
 
-    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain', args = { 'pwsh', '-nologo' } } },
-    { mods = 'LEADER', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { mods = 'LEADER', key = 'r', action = act.SplitHorizontal(spawn) },
+    { mods = 'LEADER', key = 'd', action = act.SplitVertical(spawn) },
 
-    { mods = 'ALT', key = 'r', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-    { mods = 'ALT', key = 'd', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { mods = 'ALT', key = 'r', action = act.SplitHorizontal(spawn) },
+    { mods = 'ALT', key = 'd', action = act.SplitVertical(spawn) },
 
     -- { mods = 'LEADER', key = 'LeftArrow', action = act.ActivatePaneDirection 'Left' },
     -- { mods = 'LEADER', key = 'DownArrow', action = act.ActivatePaneDirection 'Down' },
@@ -257,6 +229,8 @@ function M.config(wezterm, config)
 
     -- tabs
 
+    { mods = 'CTRL|SHIFT', key = 't', action = act.SpawnCommandInNewTab(spawn) },
+
     { mods = 'LEADER', key = '[', action = act.ActivateTabRelative(-1) },
     { mods = 'LEADER', key = ']', action = act.ActivateTabRelative(1) },
 
@@ -282,6 +256,8 @@ function M.config(wezterm, config)
     },
 
     -- window
+
+    { mods = 'CTRL|SHIFT', key = 'n', action = act.SpawnCommandInNewWindow(spawn) },
 
     { key = 'F1', action = act.ActivateCommandPalette },
     { key = 'F11', action = act.ToggleFullScreen },
