@@ -1,6 +1,6 @@
 local M = {}
 
-local palette = require('palette').gruvbox_material_dark()
+local palette = require('palette').get()
 
 function M.config(wezterm, config)
   local act = wezterm.action

@@ -1,6 +1,6 @@
 local M = {}
 
-local palette = require('palette').gruvbox_material_dark()
+local palette = require('palette').get()
 local sys = require 'sys'
 
 local function mode(window, colors)
@@ -57,7 +57,7 @@ function M.config(wezterm, config)
     window:set_right_status(wezterm.format {
       { Foreground = { Color = colors.tab_bar.inactive_tab.fg_color } },
       { Text = ' ' },
-    } .. sys.stats(wezterm, colors))
+    } .. sys.stats())
   end)
 end
 
