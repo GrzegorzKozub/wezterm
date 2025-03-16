@@ -1,6 +1,8 @@
 local M = {}
 
-function M.config(wezterm, config)
+local wezterm = require 'wezterm'
+
+function M.config(config)
   config.font = wezterm.font {
     family = 'Cascadia Code NF',
     harfbuzz_features = { 'calt = 1', 'ss01 = 1' },

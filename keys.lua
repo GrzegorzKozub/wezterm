@@ -1,8 +1,9 @@
 local M = {}
 
-local palette = require('palette').get()
+local colors = require 'colors'
+local wezterm = require 'wezterm'
 
-function M.config(wezterm, config)
+function M.config(config)
   local act = wezterm.action
 
   local spawn = { domain = 'CurrentPaneDomain', args = config.default_prog }
@@ -125,7 +126,7 @@ function M.config(wezterm, config)
         action = act.Multiple {
           act.ShowLauncherArgs {
             title = 'mux',
-            fuzzy_help_text = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'Mux: ' } },
+            fuzzy_help_text = wezterm.format { { Foreground = { Color = colors.grey1 } }, { Text = 'Mux: ' } },
             flags = 'FUZZY|WORKSPACES|DOMAINS',
           },
           'PopKeyTable',
@@ -136,7 +137,7 @@ function M.config(wezterm, config)
         key = 'n',
         action = act.Multiple {
           act.PromptInputLine {
-            description = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'New workspace:' } },
+            description = wezterm.format { { Foreground = { Color = colors.grey1 } }, { Text = 'New workspace:' } },
             action = wezterm.action_callback(function(window, pane, line)
               if line then
                 window:perform_action(act.SwitchToWorkspace { name = line }, pane)
@@ -250,7 +251,7 @@ function M.config(wezterm, config)
       key = 'o',
       action = act.ShowLauncherArgs {
         title = 'mux',
-        fuzzy_help_text = wezterm.format { { Foreground = { Color = palette.grey1 } }, { Text = 'Mux: ' } },
+        fuzzy_help_text = wezterm.format { { Foreground = { Color = colors.grey1 } }, { Text = 'Mux: ' } },
         flags = 'FUZZY|WORKSPACES|DOMAINS',
       },
     },

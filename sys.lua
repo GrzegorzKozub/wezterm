@@ -1,7 +1,7 @@
 local M = {}
 
+local colors = require 'colors'
 local wezterm = require 'wezterm'
-local palette = require('palette').get()
 
 local ram, updated, last = 0, 0, ''
 
@@ -17,13 +17,13 @@ end
 
 local function color(used, low, med, high)
   if used > high then
-    return palette.term_red
+    return colors.term_red
   elseif used > med then
-    return palette.term_orange
+    return colors.term_orange
   elseif used > low then
-    return palette.term_yellow
+    return colors.term_yellow
   end
-  return palette.bg3
+  return colors.bg3
 end
 
 local function cpu()

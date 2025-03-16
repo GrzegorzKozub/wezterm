@@ -1,6 +1,8 @@
 local M = {}
 
-function M.config(wezterm, config)
+local wezterm = require 'wezterm'
+
+function M.config(config)
   config.window_background_opacity = 0.95
 
   -- https://github.com/wezterm/wezterm/issues/5873
