@@ -42,30 +42,30 @@ function M.config(config)
       split = colors.bg1,
 
       tab_bar = {
-        background = colors.none,
+        background = 'none',
 
         active_tab = {
-          bg_color = colors.none,
+          bg_color = 'none',
           fg_color = colors.bg5,
         },
 
         inactive_tab = {
-          bg_color = colors.none,
+          bg_color = 'none',
           fg_color = colors.bg3,
         },
 
         inactive_tab_hover = {
-          bg_color = colors.none,
+          bg_color = 'none',
           fg_color = colors.grey1,
         },
 
         new_tab = {
-          bg_color = colors.none,
+          bg_color = 'none',
           fg_color = colors.bg5,
         },
 
         new_tab_hover = {
-          bg_color = colors.none,
+          bg_color = 'none',
           fg_color = colors.grey1,
         },
       },

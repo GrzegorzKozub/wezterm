@@ -27,6 +27,4 @@ return {
   aqua = '#89b482',
   orange = '#e78a4e',
   white = '#d4be98', -- fg0
-
-  none = 'rgba(0, 0, 0, 0)',
 }
