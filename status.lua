@@ -53,10 +53,7 @@ function M.config()
       { Text = pane:get_domain_name() .. ' ' },
     })
 
-    window:set_right_status(wezterm.format {
-      { Foreground = { Color = colors.bg3 } },
-      { Text = ' ' },
-    } .. sys.stats())
+    window:set_right_status(sys.stats())
   end)
 end
 
