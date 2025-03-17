@@ -47,10 +47,10 @@ function M.config()
       { Text = ' ' },
     } .. wezterm.format {
       { Foreground = { Color = colors.bg3 } },
-      { Text = wezterm.mux.get_active_workspace() .. ' ' },
+      { Text = wezterm.mux.get_active_workspace() },
     } .. wezterm.format {
       { Foreground = { Color = colors.bg3 } },
-      { Text = pane:get_domain_name() .. ' ' },
+      { Text = ' ' .. pane:get_domain_name() },
     })
 
     window:set_right_status(sys.stats())

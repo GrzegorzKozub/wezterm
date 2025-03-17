@@ -92,7 +92,7 @@ local function progress(pane)
   end
   return {
     { Foreground = { Color = color } },
-    { Text = icon and icon .. ' ' or '' },
+    { Text = icon and ' ' .. icon or '' },
   }
 end
 
@@ -100,7 +100,7 @@ function M.config(config)
   config.use_fancy_tab_bar = false
   config.tab_bar_at_bottom = true
 
-  config.tab_max_width = 64
+  config.tab_max_width = 32
   config.show_new_tab_button_in_tab_bar = false
 
   local new = '󰐕'
@@ -130,7 +130,7 @@ function M.config(config)
       { Foreground = { Color = fg_color(tab) } },
       {
         Text = string.format(
-          '%s:%s %s ',
+          ' %s:%s %s',
           tab.tab_index,
           tab.active_pane.pane_index,
           string.gsub(tab.active_pane.title, 'Copy mode: ', '')
@@ -138,7 +138,7 @@ function M.config(config)
       },
     } .. wezterm.format(progress(tab.active_pane)) .. wezterm.format {
       { Foreground = { Color = fg_color(tab) } },
-      { Text = tab.active_pane.is_zoomed and ' ' or '' },
+      { Text = tab.active_pane.is_zoomed and ' ' or '' },
     }
   end)
 

@@ -5,14 +5,16 @@ local wezterm = require 'wezterm'
 
 local ram, updated, last = 0, 0, ''
 
+local function pwsh(cmd, extract)
+  local ok, stdout = wezterm.run_child_process { 'pwsh', '-Command', cmd }
+  return ok and extract(stdout) or 0
+end
+
 local function check(counter)
-  local ok, stdout = wezterm.run_child_process { 'pwsh', '-Command', counter }
-  if ok then
+  return pwsh("(Get-Counter '" .. counter .. "').CounterSamples.CookedValue", function(stdout)
     local result = stdout:match('%d+%,?%d*'):gsub(',', '.')
     return tonumber(result)
-  else
-    return 0
-  end
+  end)
 end
 
 local function color(used, low, med, high)
@@ -27,23 +29,20 @@ local function color(used, low, med, high)
 end
 
 local function cpu()
-  local used = check "(Get-Counter '\\Processor(_Total)\\% Processor Time').CounterSamples.CookedValue"
+  local used = check '\\Processor(_Total)\\% Processor Time'
   return string.format('%.1f', used) .. '%', color(used, 25, 50, 75)
 end
 
 local function mem()
-  local free = check "(Get-Counter '\\Memory\\Available MBytes').CounterSamples.CookedValue"
+  local free = check '\\Memory\\Available MBytes'
   local used = ((ram - free) / ram) * 100
   return string.format('%.1f', free / 1024) .. 'G', color(used, 50, 70, 90)
 end
 
 local function mem_total()
-  local ok, stdout = wezterm.run_child_process { 'wmic', 'ComputerSystem', 'get', 'TotalPhysicalMemory' }
-  if ok then
+  return pwsh('(Get-CimInstance -ClassName Win32_ComputerSystem).TotalPhysicalMemory', function(stdout)
     return tonumber(stdout:match '%d+') / 1024 ^ 2
-  else
-    return 0
-  end
+  end)
 end
 
 function M.stats()
