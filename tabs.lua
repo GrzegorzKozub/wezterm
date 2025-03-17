@@ -1,7 +1,62 @@
 local M = {}
 
 local colors = require 'colors'
+local concat = require('util').concat
 local wezterm = require 'wezterm'
+
+local function keys(config)
+  local act = wezterm.action
+  local spawn = { domain = 'CurrentPaneDomain', args = config.default_prog }
+
+  local move = act.Multiple {
+    wezterm.action_callback(function(window, pane)
+      pane:move_to_new_tab()
+      pane:activate()
+    end),
+    'PopKeyTable',
+  }
+
+  concat(config.keys, {
+    { mods = 'ALT', key = 'T', action = act.ActivateKeyTable { name = 'tab', one_shot = false } },
+
+    { mods = 'CTRL|SHIFT', key = 't', action = act.SpawnCommandInNewTab(spawn) },
+
+    { mods = 'LEADER', key = '[', action = act.ActivateTabRelative(-1) },
+    { mods = 'LEADER', key = ']', action = act.ActivateTabRelative(1) },
+
+    { mods = 'LEADER', key = 'b', action = move },
+  })
+
+  config.key_tables['tab'] = {
+    { mods = 'ALT', key = 'T', action = 'PopKeyTable' },
+
+    { key = 'n', action = act.Multiple { act.SpawnCommandInNewTab(spawn), 'PopKeyTable' } },
+
+    { key = 'LeftArrow', action = act.ActivateTabRelative(-1) },
+    { key = 'RightArrow', action = act.ActivateTabRelative(1) },
+
+    { key = '[', action = act.ActivateTabRelative(-1) },
+    { key = ']', action = act.ActivateTabRelative(1) },
+
+    { key = '1', action = act.Multiple { act.ActivateTab(0), 'PopKeyTable' } },
+    { key = '2', action = act.Multiple { act.ActivateTab(1), 'PopKeyTable' } },
+    { key = '3', action = act.Multiple { act.ActivateTab(2), 'PopKeyTable' } },
+    { key = '4', action = act.Multiple { act.ActivateTab(3), 'PopKeyTable' } },
+    { key = '5', action = act.Multiple { act.ActivateTab(4), 'PopKeyTable' } },
+    { key = '6', action = act.Multiple { act.ActivateTab(5), 'PopKeyTable' } },
+    { key = '7', action = act.Multiple { act.ActivateTab(6), 'PopKeyTable' } },
+    { key = '8', action = act.Multiple { act.ActivateTab(7), 'PopKeyTable' } },
+    { key = '9', action = act.Multiple { act.ActivateTab(8), 'PopKeyTable' } },
+
+    { key = 'Tab', action = 'ActivateLastTab' },
+
+    { key = 'b', action = move },
+
+    { key = 'Enter', action = 'PopKeyTable' },
+    { key = 'Escape', action = 'PopKeyTable' },
+    { key = 'q', action = 'PopKeyTable' },
+  }
+end
 
 local function fg_color(tab)
   if tab.is_active then
@@ -86,6 +141,8 @@ function M.config(config)
       { Text = tab.active_pane.is_zoomed and ' ' or '' },
     }
   end)
+
+  keys(config)
 end
 
 return M

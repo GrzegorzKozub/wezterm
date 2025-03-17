@@ -1,6 +1,40 @@
 local M = {}
 
+local concat = require('util').concat
 local wezterm = require 'wezterm'
+
+local function keys(config)
+  local act = wezterm.action
+  local spawn = { domain = 'CurrentPaneDomain', args = config.default_prog }
+
+  concat(config.keys, {
+    { mods = 'CTRL|SHIFT', key = 'n', action = act.SpawnCommandInNewWindow(spawn) },
+
+    { key = 'F11', action = act.ToggleFullScreen },
+
+    {
+      mods = 'CTRL|SHIFT',
+      key = '_',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').decrease(window, config)
+      end),
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = '+',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').increase(window, config)
+      end),
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'Backspace',
+      action = wezterm.action_callback(function(window, pane)
+        require('opacity').reset(window, config)
+      end),
+    },
+  })
+end
 
 function M.config(config)
   config.window_background_opacity = 0.95
@@ -50,6 +84,8 @@ function M.config(config)
       tab.active_pane.title
     )
   end)
+
+  keys(config)
 end
 
 return M
