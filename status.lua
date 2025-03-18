@@ -46,10 +46,10 @@ function M.config()
       { Foreground = { Color = color } },
       { Text = ' ' },
     } .. wezterm.format {
-      { Foreground = { Color = colors.bg3 } },
+      { Foreground = { Color = colors.bg5 } },
       { Text = wezterm.mux.get_active_workspace() },
     } .. wezterm.format {
-      { Foreground = { Color = colors.bg3 } },
+      { Foreground = { Color = colors.bg5 } },
       { Text = ' ' .. pane:get_domain_name() },
     })
 
