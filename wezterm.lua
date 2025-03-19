@@ -1,4 +1,4 @@
-local config = require('wezterm').config_builder()
+local config = {} -- slow startup with config_builder
 
 require('options').config(config)
 
