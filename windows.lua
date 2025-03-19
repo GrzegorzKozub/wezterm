@@ -41,7 +41,7 @@ function M.config(config)
 
   -- https://github.com/wezterm/wezterm/issues/5873
   -- https://github.com/wezterm/wezterm/issues/6767
-  -- config.win32_system_backdrop = 'Tabbed'
+  config.win32_system_backdrop = 'Acrylic' -- Tabbed
 
   config.window_decorations = 'RESIZE' -- INTEGRATED_BUTTONS
 
