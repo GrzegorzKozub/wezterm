@@ -71,6 +71,10 @@ local function fg_color(tab)
   end
 end
 
+local function title(pane)
+  return string.gsub(string.gsub(pane.title, 'Copy mode: ', ''), 'Administrator: ', '')
+end
+
 local function progress_icon(percentage)
   local icons = { '󰪞', '󰪟', '󰪠', '󰪡', '󰪢', '󰪣', '󰪤', '󰪥' }
   return icons[math.floor(percentage / 12) + 1]
@@ -89,6 +93,18 @@ local function progress(pane)
       icon = '󰪡'
       color = colors.term_blue
     end
+  end
+  return {
+    { Foreground = { Color = color } },
+    { Text = icon and ' ' .. icon or '' },
+  }
+end
+
+local function admin(pane)
+  local icon, color = nil, colors.bg5
+  if string.match(pane.title, 'Administrator: ') then
+    icon = '󰒘'
+    color = colors.term_yellow
   end
   return {
     { Foreground = { Color = color } },
@@ -128,15 +144,8 @@ function M.config(config)
   wezterm.on('format-tab-title', function(tab) -- tabs, panes, config, hover, max_width
     return wezterm.format {
       { Foreground = { Color = fg_color(tab) } },
-      {
-        Text = string.format(
-          ' %s:%s %s',
-          tab.tab_index,
-          tab.active_pane.pane_index,
-          string.gsub(tab.active_pane.title, 'Copy mode: ', '')
-        ),
-      },
-    } .. wezterm.format(progress(tab.active_pane)) .. wezterm.format {
+      { Text = string.format(' %s:%s %s', tab.tab_index, tab.active_pane.pane_index, title(tab.active_pane)) },
+    } .. wezterm.format(progress(tab.active_pane)) .. wezterm.format(admin(tab.active_pane)) .. wezterm.format {
       { Foreground = { Color = fg_color(tab) } },
       { Text = tab.active_pane.is_zoomed and ' ' or '' },
     }
