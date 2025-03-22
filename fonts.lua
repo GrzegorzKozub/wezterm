@@ -3,11 +3,22 @@ local M = {}
 local wezterm = require 'wezterm'
 
 function M.config(config)
-  config.font = wezterm.font {
+  local font = {
     family = 'Cascadia Code NF',
     harfbuzz_features = { 'calt = 1', 'ss01 = 1' },
   }
+
+  config.font = wezterm.font(font)
   config.font_size = 12.0
+
+  -- don't use very thin strokes for dim fonts
+  font.weight = 'DemiLight'
+  config.font_rules = {
+    {
+      intensity = 'Half',
+      font = wezterm.font(font),
+    },
+  }
 
   config.command_palette_font = wezterm.font 'Segoe UI'
   config.command_palette_font_size = 11.0
