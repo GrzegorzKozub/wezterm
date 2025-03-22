@@ -1,20 +1,16 @@
 local M = {}
 
 local colors = require 'colors'
+local pwsh = require('util').pwsh
 local wezterm = require 'wezterm'
 
 local ram, updated, last = 0, 0, ''
-
-local function pwsh(cmd, extract)
-  local ok, stdout = wezterm.run_child_process { 'pwsh', '-Command', cmd }
-  return ok and extract(stdout) or 0
-end
 
 local function check(counter)
   return pwsh("(Get-Counter '" .. counter .. "').CounterSamples.CookedValue", function(stdout)
     local result = stdout:match('%d+%,?%d*'):gsub(',', '.')
     return tonumber(result)
-  end)
+  end, 0)
 end
 
 local function color(used, low, med, high)
@@ -42,7 +38,7 @@ end
 local function mem_total()
   return pwsh('(Get-CimInstance -ClassName Win32_ComputerSystem).TotalPhysicalMemory', function(stdout)
     return tonumber(stdout:match '%d+') / 1024 ^ 2
-  end)
+  end, 0)
 end
 
 function M.stats()

@@ -1,6 +1,7 @@
 local M = {}
 
 local concat = require('util').concat
+local user = require 'user'
 local wezterm = require 'wezterm'
 
 local function keys(config)
@@ -76,9 +77,10 @@ function M.config(config)
 
   wezterm.on('format-window-title', function(tab, pane) -- tabs, panes, config
     return string.format(
-      '%s %s %s:%s %s',
+      '%s %s%s %s:%s %s',
       wezterm.mux.get_active_workspace(),
       pane.domain_name,
+      user.admin() and ' ⛊' or '',
       tab.tab_index,
       tab.active_pane.pane_index,
       tab.active_pane.title
