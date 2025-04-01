@@ -1,5 +1,6 @@
 local M = {}
 
+local bell = require 'bell'
 local colors = require 'colors'
 local concat = require('util').concat
 local wezterm = require 'wezterm'
@@ -59,7 +60,9 @@ local function keys(config)
 end
 
 local function fg_color(tab)
-  if tab.is_active then
+  if bell.check() then
+    return colors.term_yellow
+  elseif tab.is_active then
     return colors.bg5
   else
     for _, pane in ipairs(tab.panes) do

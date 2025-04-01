@@ -19,4 +19,6 @@ require('copy').config(config)
 require('move').config(config)
 require('resize').config(config)
 
+require('bell').config(config)
+
 return config
