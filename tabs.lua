@@ -163,13 +163,13 @@ function M.config(config)
     return wezterm.format {
       { Foreground = { Color = fg_color(tab) } },
       { Text = string.format(' %s:%s %s', tab.tab_index, tab.active_pane.pane_index, title(tab.active_pane)) },
-    } .. wezterm.format(progress(tab.active_pane)) .. wezterm.format(admin(tab.active_pane)) .. wezterm.format {
+    } .. wezterm.format(admin(tab.active_pane)) .. wezterm.format {
       { Foreground = { Color = fg_color(tab) } },
       {
         Text = (tab.active_pane.is_zoomed and ' ' or '')
           .. (bell.check(tab.tab_id) and ' ' or (unseen(tab) and ' ' or '')),
       },
-    }
+    } .. wezterm.format(progress(tab.active_pane))
   end)
 
   keys(config)
