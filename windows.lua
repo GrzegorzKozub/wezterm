@@ -38,11 +38,12 @@ local function keys(config)
 end
 
 function M.config(config)
-  config.window_background_opacity = 0.95
+  config.window_background_opacity = 95
 
-  -- https://github.com/wezterm/wezterm/issues/5873
-  -- https://github.com/wezterm/wezterm/issues/6767
-  config.win32_system_backdrop = 'Acrylic' -- Tabbed
+  -- https://github.com/wezterm/wezterm/pull/6876
+  -- config.win32_window_appearance = 'Dark'
+
+  config.win32_system_backdrop = 'Mica'
 
   config.window_decorations = 'RESIZE' -- INTEGRATED_BUTTONS
 
