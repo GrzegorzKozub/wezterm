@@ -1,6 +1,7 @@
 local M = {}
 
 local concat = require('util').concat
+local opacity = require 'opacity'
 local user = require 'user'
 local wezterm = require 'wezterm'
 
@@ -17,33 +18,31 @@ local function keys(config)
       mods = 'CTRL|SHIFT',
       key = '_',
       action = wezterm.action_callback(function(window, pane)
-        require('opacity').decrease(window, config)
+        opacity.decrease(window, config)
       end),
     },
     {
       mods = 'CTRL|SHIFT',
       key = '+',
       action = wezterm.action_callback(function(window, pane)
-        require('opacity').increase(window, config)
+        opacity.increase(window, config)
       end),
     },
     {
       mods = 'CTRL|SHIFT',
       key = 'Backspace',
       action = wezterm.action_callback(function(window, pane)
-        require('opacity').reset(window, config)
+        opacity.reset(window)
       end),
     },
   })
 end
 
 function M.config(config)
-  config.window_background_opacity = 95
+  config.window_background_opacity = 0.9
 
-  -- https://github.com/wezterm/wezterm/pull/6876
-  -- config.win32_window_appearance = 'Dark'
-
-  config.win32_system_backdrop = 'Mica'
+  config.win32_system_backdrop = 'Acrylic'
+  config.win32_window_appearance = 'Dark' -- https://github.com/wezterm/wezterm/pull/6876
 
   config.window_decorations = 'RESIZE' -- INTEGRATED_BUTTONS
 

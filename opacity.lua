@@ -22,8 +22,7 @@ function M.increase(window, config)
   adjust(window, config, 0.05)
 end
 
-function M.reset(window, config)
-  config.window_background_opacity = 0.95
+function M.reset(window)
   window:set_config_overrides {}
 end
 
