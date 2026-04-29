@@ -26,6 +26,7 @@ local function keys(config)
     -- workarounds
 
     { mods = 'LEADER|CTRL', key = 'x', action = act.SendKey { mods = 'CTRL', key = 'x' } },
+    { mods = 'SHIFT', key = 'Enter', action = act.SendString '\n' }, -- new lines in claude code
 
     -- trash keys
 
