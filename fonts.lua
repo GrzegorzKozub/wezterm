@@ -36,7 +36,7 @@ function M.config(config)
   config.text_blink_rate = 1000
   config.text_blink_rate_rapid = 500
 
-  config.custom_block_glyphs = false
+  config.custom_block_glyphs = true
 
   config.default_cursor_style = 'SteadyBar'
   config.cursor_thickness = '1pt'
