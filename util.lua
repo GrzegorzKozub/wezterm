@@ -10,7 +10,13 @@ function M.concat(a, b)
 end
 
 function M.pwsh(cmd, extract, fallback)
-  local ok, stdout = wezterm.run_child_process { 'pwsh', '-Command', cmd }
+  local ok, stdout = wezterm.run_child_process {
+    'pwsh',
+    '-NoProfile',
+    '-NonInteractive',
+    '-Command',
+    cmd,
+  }
   return ok and extract(stdout) or fallback
 end
 

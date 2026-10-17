@@ -13,8 +13,8 @@ end
 
 wezterm.on('update-status', function() -- window, pane
   if not checked then
-    admin = check_admin()
     checked = true
+    admin = check_admin()
   end
 end)
 
