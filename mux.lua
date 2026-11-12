@@ -42,6 +42,21 @@ local function keys(config)
       },
     },
 
+    {
+      key = 'd',
+      action = act.Multiple { act.DetachDomain { DomainName = 'unix' }, 'PopKeyTable' },
+    },
+
+    {
+      key = 'k',
+      action = act.Multiple {
+        wezterm.action_callback(function()
+          wezterm.background_child_process { 'taskkill', '/IM', 'wezterm-mux-server.exe', '/F' }
+        end),
+        'PopKeyTable',
+      },
+    },
+
     { key = 'LeftArrow', action = act.SwitchWorkspaceRelative(-1) },
     { key = 'RightArrow', action = act.SwitchWorkspaceRelative(1) },
 
@@ -63,8 +78,7 @@ function M.config(config)
     },
   }
 
-  -- config.default_domain = 'unix'
-  -- config.default_gui_startup_args = concat({ 'connect', 'unix' }, config.default_prog)
+  config.default_gui_startup_args = concat({ 'connect', 'unix' }, config.default_prog)
 
   keys(config)
 end

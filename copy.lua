@@ -13,6 +13,10 @@ function M.config(config)
     { mods = 'ALT', key = 'F', action = act.Search { CaseInSensitiveString = '' } }, -- search_mode
   })
 
+  if not wezterm.gui then -- not available in wezterm-mux-server
+    return
+  end
+
   local copy = wezterm.gui.default_key_tables().copy_mode
 
   concat(copy, {

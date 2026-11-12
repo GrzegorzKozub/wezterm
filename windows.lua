@@ -60,18 +60,26 @@ function M.config(config)
 
   config.adjust_window_size_when_changing_font_size = false
 
-  wezterm.on('gui-attached', function(domain)
+  local function center(gui_window)
     local screen = wezterm.gui.screens().active
+    local dim = gui_window:get_dimensions()
+    local left = (screen.width - dim.pixel_width) / 2
+    local top = (screen.height - dim.pixel_height) / 2 - 84 -- taskbar on 4k at 200%
+    gui_window:set_position(left, top)
+    gui_window:set_inner_size(dim.pixel_width, dim.pixel_height)
+  end
+
+  wezterm.on('gui-attached', function(domain)
     for _, mux_window in ipairs(wezterm.mux.all_windows()) do
       local gui_window = mux_window:gui_window()
-      if domain ~= 'unix' then
-        gui_window:perform_action(wezterm.action.ResetFontAndWindowSize, mux_window:active_pane())
+      gui_window:perform_action(wezterm.action.ResetFontAndWindowSize, mux_window:active_pane())
+      if domain:name() == 'unix' then
+        wezterm.time.call_after(0.1, function()
+          center(gui_window)
+        end)
+      else
+        center(gui_window)
       end
-      local dim = gui_window:get_dimensions()
-      local left = (screen.width - dim.pixel_width) / 2
-      local top = (screen.height - dim.pixel_height) / 2 - 84 -- taskbar on 4k at 200%
-      gui_window:set_position(left, top)
-      gui_window:set_inner_size(dim.pixel_width, dim.pixel_height)
     end
   end)
 

@@ -44,6 +44,11 @@ local function admin()
   }
 end
 
+local function domain(pane)
+  local ok, name = pcall(pane.get_domain_name, pane)
+  return ok and ' ' .. name or ''
+end
+
 function M.config()
   wezterm.on('update-status', function(window, pane)
     local icon, color = mode(window)
@@ -63,7 +68,7 @@ function M.config()
       { Text = wezterm.mux.get_active_workspace() },
     } .. wezterm.format {
       { Foreground = { Color = colors.bg5 } },
-      { Text = ' ' .. pane:get_domain_name() },
+      { Text = domain(pane) },
     } .. wezterm.format(admin()))
 
     window:set_right_status(sys.stats())
