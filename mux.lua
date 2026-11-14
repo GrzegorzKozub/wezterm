@@ -78,7 +78,7 @@ function M.config(config)
     },
   }
 
-  config.default_gui_startup_args = concat({ 'connect', 'unix' }, config.default_prog)
+  -- config.default_gui_startup_args = concat({ 'connect', 'unix' }, config.default_prog)
 
   keys(config)
 end
