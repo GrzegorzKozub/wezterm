@@ -3,6 +3,7 @@ local M = {}
 local bell = require 'bell'
 local colors = require 'colors'
 local concat = require('util').concat
+local unseen = require 'unseen'
 local wezterm = require 'wezterm'
 
 local function keys(config)
@@ -66,24 +67,12 @@ local function keys(config)
   }
 end
 
-local function unseen(tab)
-  if tab.is_active then
-    return false
-  end
-  for _, pane in ipairs(tab.panes) do
-    if pane.has_unseen_output then
-      return true
-    end
-  end
-  return false
-end
-
 local function fg_color(tab)
   if bell.check(tab.tab_id) then
     return colors.term_yellow
   elseif tab.is_active then
     return colors.bg5
-  elseif unseen(tab) then
+  elseif unseen.check(tab) then
     return colors.term_white
   end
   return colors.bg3
@@ -167,7 +156,7 @@ function M.config(config)
       { Foreground = { Color = fg_color(tab) } },
       {
         Text = (tab.active_pane.is_zoomed and ' ' or '')
-          .. (bell.check(tab.tab_id) and ' ' or (unseen(tab) and ' ' or '')),
+          .. (bell.check(tab.tab_id) and ' ' or (unseen.check(tab) and ' ' or '')),
       },
     } .. wezterm.format(progress(tab.active_pane))
   end)
